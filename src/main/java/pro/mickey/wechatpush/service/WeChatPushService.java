@@ -3,16 +3,12 @@ package pro.mickey.wechatpush.service;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 @Slf4j
 public class WeChatPushService extends WebSocketClient {
-
-    @Autowired
-    private WeChatMessageHandler handler;
 
     public WeChatPushService(String url) throws URISyntaxException {
         super(new URI(url));
@@ -21,7 +17,7 @@ public class WeChatPushService extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         log.info("收到消息：" + message);
-        handler.hand(message, this);
+        WeChatMessageHandler.getInstance().handMessage(message);
     }
 
     @Override

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 public class TestService {
 
     @Autowired
-    private WeChatPushService weChatService;
+    private WeChatMessageHandler handler;
 
     @Value("${special.wxid}")
     private String specialWxId;
 
     @Scheduled(fixedRate = 1000 * 60 * 10)
     public void showNews() {
-//        weChatService.sendMsg(specialWxId, "我用Java发送的微信！");
-//        weChatService.getChatRoomContact();
+        handler.sendMsg("filehelper", "我用Java发送的微信！");
+        handler.getChatRoomContact();
     }
 }

@@ -1,22 +1,31 @@
 package pro.mickey.wechatpush.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pro.mickey.wechatpush.dto.WeChatMsgDTO;
 
-/**
- * @author xiaobing@meicai.cn
- * @description
- * @since 2021/3/26
- **/
 @Slf4j
 @Component
 public class WeChatMessageHandler {
 
+    @Autowired
     private WeChatPushService weChatPushService;
 
-    public void hand(String message, WeChatPushService weChatPushService) {
-        this.weChatPushService = weChatPushService;
+    @Value("${special.wxid}")
+    private String specialWxId;
+
+    private static final String FILE_HELPER = "filehelper";
+
+    private static final WeChatMessageHandler INSTANCE = new WeChatMessageHandler();
+
+    public static WeChatMessageHandler getInstance(){
+        return INSTANCE;
+    }
+
+    public void handMessage(String message) {
+        log.info("处理消息");
     }
 
     /**
