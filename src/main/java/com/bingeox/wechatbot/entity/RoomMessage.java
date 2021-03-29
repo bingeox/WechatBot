@@ -1,4 +1,4 @@
-package pro.mickey.wechatpush.entity;
+package com.bingeox.wechatbot.entity;
 
 import lombok.Data;
 

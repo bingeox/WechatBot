@@ -1,4 +1,4 @@
-package pro.mickey.wechatpush;
+package com.bingeox.wechatbot;
 
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.enums.ReadyState;
@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import pro.mickey.wechatpush.service.WeChatPushService;
+import com.bingeox.wechatbot.service.WeChatPushService;
 
 @Slf4j
 @SpringBootApplication

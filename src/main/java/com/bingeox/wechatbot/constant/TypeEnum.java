@@ -1,4 +1,4 @@
-package pro.mickey.wechatpush.constant;
+package com.bingeox.wechatbot.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,13 +1,13 @@
-package pro.mickey.wechatpush.service;
+package com.bingeox.wechatbot.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import pro.mickey.wechatpush.constant.Constants;
-import pro.mickey.wechatpush.constant.TypeEnum;
-import pro.mickey.wechatpush.entity.BaseMessage;
-import pro.mickey.wechatpush.entity.RoomMessage;
+import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.constant.TypeEnum;
+import com.bingeox.wechatbot.entity.BaseMessage;
+import com.bingeox.wechatbot.entity.RoomMessage;
 
 /**
  * doc: https://www.showdoc.com.cn/wechatbot?page_id=3905634824500582
