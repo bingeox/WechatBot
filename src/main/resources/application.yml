@@ -1,0 +1,6 @@
+config:
+  weChat:
+    url: ws://127.0.0.1:5555
+
+special:
+  wxid: wxid_68900890790
