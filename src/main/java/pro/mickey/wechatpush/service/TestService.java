@@ -16,7 +16,8 @@ public class TestService {
 
     @Scheduled(fixedRate = 1000 * 60 * 10)
     public void showNews() {
-        handler.sendMsg("filehelper", "我用Java发送的微信！");
-        handler.getChatRoomContact();
+        handler.sendTextMsg("filehelper", "我用Java发送的微信！");
+//        handler.getChatRoomContact();
+//        handler.getContact();
     }
 }

@@ -1,8 +1,10 @@
 package pro.mickey.wechatpush.service;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import pro.mickey.wechatpush.entity.BaseMessage;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,8 +18,7 @@ public class WeChatPushService extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        log.info("收到消息：" + message);
-        WeChatMessageHandler.getInstance().handMessage(message);
+        WeChatMessageHandler.getInstance().handMessage(JSON.parseObject(message, BaseMessage.class));
     }
 
     @Override
