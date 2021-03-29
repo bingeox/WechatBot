@@ -18,6 +18,10 @@ public class BaseMessage implements Serializable {
     private String time;
     private String status;
 
+    public BaseMessage(){
+        this.id = String.valueOf(System.currentTimeMillis());
+    }
+
     public String toJson() {
         return JSON.toJSONString(this);
     }

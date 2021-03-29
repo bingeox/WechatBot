@@ -37,6 +37,7 @@ function getid()
    const id = Date.now();
    return id.toString();
 }
+
 function get_chat_nick_p(roomid)
 {
   const j={
@@ -175,10 +176,7 @@ function get_personal_detail()
   const s = JSON.stringify(j);
   return s;
 }
-/**
- * send_txt_msg : 发送消息给好友
- * 
- */
+
 function get_personal_info()
 {
   const j={
@@ -190,6 +188,11 @@ function get_personal_info()
   const s = JSON.stringify(j);
   return s;
 }
+
+/**
+ * send_txt_msg : 发送消息给好友
+ *
+ */
 function send_txt_msg()
 {
   const j={
