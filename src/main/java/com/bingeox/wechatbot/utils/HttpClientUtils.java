@@ -28,16 +28,14 @@ public class HttpClientUtils {
 
     static {
         // 设置请求和传输超时时间
-        requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();
+        requestConfig = RequestConfig.custom().setSocketTimeout(60 * 1000).setConnectTimeout(60 * 1000).build();
     }
 
     /**
      * post请求传输json参数
      *
-     * @param url
-     *            url地址
-     * @param jsonParam
-     *            参数
+     * @param url       url地址
+     * @param jsonParam 参数
      * @return
      */
     public static JSONObject httpPost(String url, JSONObject jsonParam) {
@@ -80,10 +78,8 @@ public class HttpClientUtils {
      * post请求传输String参数 例如：name=Jack&sex=1&type=2
      * Content-type:application/x-www-form-urlencoded
      *
-     * @param url
-     *            url地址
-     * @param strParam
-     *            参数
+     * @param url      url地址
+     * @param strParam 参数
      * @return
      */
     public static JSONObject httpPost(String url, String strParam) {
@@ -124,8 +120,7 @@ public class HttpClientUtils {
     /**
      * 发送get请求
      *
-     * @param url
-     *            路径
+     * @param url 路径
      * @return
      */
     public static JSONObject httpGet(String url) {

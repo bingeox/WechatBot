@@ -1,4 +1,4 @@
-package com.bingeox.wechatbot.entity;
+package com.bingeox.wechatbot.entity.bot;
 
 import lombok.Data;
 

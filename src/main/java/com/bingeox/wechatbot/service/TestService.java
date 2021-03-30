@@ -18,8 +18,8 @@ public class TestService {
 
     @Scheduled(fixedRate = 1000 * 60 * 10)
     public void showNews() {
-//        log.info("------sendTextMsg-------");
-//        handler.sendTextMsg("filehelper", "我用Java发送的微信！");
+        log.info("------sendTextMsg-------");
+        handler.sendTextMsg("filehelper", "我用Java发送的微信！");
 //        log.info("------sendPicMsg-------");
 //        handler.sendPicMsg("filehelper", "C:\\Users\\Administrator\\Desktop\\pic\\test.png");
 //        log.info("------getChatRoomContactList-------");

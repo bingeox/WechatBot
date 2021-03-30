@@ -1,9 +1,9 @@
 config:
   weChat:
     url: ws://127.0.0.1:5555
-
 special:
-  wxid: wxid_6057790578912
+  # wxid_6057790578912
+  wxid: wxid_9wrq5rwi31ye22
 
 auto_reply_info:
   # 是否开启自动回复
@@ -41,7 +41,6 @@ auto_reply_info:
   # 思知机器人 <https://www.ownthink.com/> 免费，如果只是简单使用 app_key 可不申请。
   ownthink_conf:
     app_key: 3f9ae1c73db460f4bbb2b491c9119eec
-
 alarm_info:
   #True 开启定时提醒，False 关闭
   is_alarm: True

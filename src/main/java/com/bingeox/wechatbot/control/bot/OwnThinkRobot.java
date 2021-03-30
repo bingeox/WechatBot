@@ -2,9 +2,10 @@ package com.bingeox.wechatbot.control.bot;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bingeox.wechatbot.entity.OwnThinkReq;
-import com.bingeox.wechatbot.entity.OwnThinkResp;
+import com.bingeox.wechatbot.entity.bot.OwnThinkReq;
+import com.bingeox.wechatbot.entity.bot.OwnThinkResp;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
  * @description 思知机器人，接口地址:<https://www.ownthink.com/> userid 可为空
  * @since 2021/3/30
  **/
+@Component
 public class OwnThinkRobot {
 
     private static final String APPID = "3f9ae1c73db460f4bbb2b491c9119eec";
