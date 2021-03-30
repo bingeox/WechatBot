@@ -43,14 +43,17 @@ public class WeChatMessageHandler {
     /**
      * 发送文本消息
      *
-     * @param wxid
+     * @param wxid roomid或wxid
      * @param text
      */
     public void sendTextMsg(String wxid, Object text) {
-        NormalMessage sendMsg = new NormalMessage();
+        RoomMessage sendMsg = new RoomMessage();
         sendMsg.setWxid(wxid);
         sendMsg.setContent(text);
         sendMsg.setType(TypeEnum.TXT_MSG.getType());
+        sendMsg.setExt(Constants.NULL);
+        sendMsg.setRoomid(Constants.NULL);
+        sendMsg.setNickname(Constants.NULL);
 
         String json = sendMsg.toJson();
         log.info("sendTextMsg:" + json);
@@ -71,6 +74,23 @@ public class WeChatMessageHandler {
 
         String json = sendMsg.toJson();
         log.info("sendPicMsg:" + json);
+        sendMsg(json);
+    }
+
+    /**
+     * 获取文件
+     *
+     * @param wxid    roomid或wxid
+     * @param picPath
+     */
+    public void sendAttatch(String wxid, String picPath) {
+        NormalMessage sendMsg = new NormalMessage();
+        sendMsg.setWxid(wxid);
+        sendMsg.setContent(picPath);
+        sendMsg.setType(TypeEnum.ATTATCH_FILE.getType());
+
+        String json = sendMsg.toJson();
+        log.info("sendAttatch:" + json);
         sendMsg(json);
     }
 
@@ -98,9 +118,9 @@ public class WeChatMessageHandler {
      * 获取微信所有群，只有 roomId和群成员wxid
      */
     public void getChatRoomContactList() {
-        NormalMessage sendMsg = new NormalMessage();
+        RoomMessage sendMsg = new RoomMessage();
         sendMsg.setWxid(Constants.NULL);
-        sendMsg.setContent(Constants.CHATROOM_LIST);
+        sendMsg.setContent(Constants.NULL);
         sendMsg.setType(TypeEnum.CHATROOM_MEMBER.getType());
 
         String json = sendMsg.toJson();
@@ -114,7 +134,7 @@ public class WeChatMessageHandler {
     public void getContactList() {
         NormalMessage sendMsg = new NormalMessage();
         sendMsg.setWxid(Constants.NULL);
-        sendMsg.setContent(Constants.CONTRACT_LIST);
+        sendMsg.setContent(Constants.NULL);
         sendMsg.setType(TypeEnum.USER_LIST.getType());
 
         String json = sendMsg.toJson();
@@ -128,13 +148,30 @@ public class WeChatMessageHandler {
      * @param roomId
      */
     public void getChatNickByRoomId(String roomId) {
-        NormalMessage sendMsg = new NormalMessage();
+        RoomMessage sendMsg = new RoomMessage();
         sendMsg.setWxid(Constants.ROOT);
         sendMsg.setContent(roomId);
         sendMsg.setType(TypeEnum.CHATROOM_MEMBER_NICK.getType());
 
         String json = sendMsg.toJson();
         log.info("getChatNickByRoomId:" + json);
+        sendMsg(json);
+    }
+
+    /**
+     * 根据群id和wxid获取成员昵称
+     *
+     * @param roomId
+     * @param wxid
+     */
+    public void getPersonNickByRoomIdAndWxid(String roomId, String wxid) {
+        RoomMessage sendMsg = new RoomMessage();
+        sendMsg.setWxid(wxid);
+        sendMsg.setRoomid(roomId);
+        sendMsg.setType(TypeEnum.CHATROOM_MEMBER_NICK.getType());
+
+        String json = sendMsg.toJson();
+        log.info("getPersonNickByRoomIdAndWxid:" + json);
         sendMsg(json);
     }
 
@@ -185,13 +222,7 @@ public class WeChatMessageHandler {
     }
 
     private void sendMsg(String json) {
-        try {
-            client.send(json);
-        } catch (Exception e) {
-            /**
-             * 这块我本来用于发送微信失败补偿邮件
-             */
-        }
+        client.sendMsg(json);
     }
 
 }

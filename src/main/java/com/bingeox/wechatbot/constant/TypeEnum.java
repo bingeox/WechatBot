@@ -31,7 +31,8 @@ public enum TypeEnum {
     //微信好友请求消息
     NEW_FRIEND_REQUEST(37),
     //同意微信好友请求消息
-    AGREE_TO_FRIEND_REQUEST(10000);
+    AGREE_TO_FRIEND_REQUEST(10000),
+    ATTATCH_FILE(5003);
 
     private int type;
 

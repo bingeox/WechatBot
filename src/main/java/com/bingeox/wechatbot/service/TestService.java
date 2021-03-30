@@ -19,8 +19,8 @@ public class TestService {
 
     @Scheduled(fixedRate = 1000 * 60 * 10)
     public void showNews() {
-        log.info("------sendTextMsg-------");
-        handler.sendTextMsg("filehelper", "我用Java发送的微信！");
+//        log.info("------sendTextMsg-------");
+//        handler.sendTextMsg("filehelper", "我用Java发送的微信！");
 //        log.info("------sendPicMsg-------");
 //        handler.sendPicMsg("filehelper", "C:\\Users\\Administrator\\Desktop\\pic\\test.png");
 //        log.info("------getChatRoomContactList-------");
@@ -29,6 +29,8 @@ public class TestService {
 //        handler.getContactList();
 //        log.info("------getChatNickByRoomId-------");
 //        handler.getChatNickByRoomId("13986924266@chatroom");
+//        log.info("------getPersonNickByRoomIdAndWxid-------");
+//        handler.getPersonNickByRoomIdAndWxid("18498027408@chatroom", "wxid_7n1xlvznuu1p21");
 //        log.info("------getPersonalDetail-------");
 //        handler.getPersonalDetail(specialWxId);
 //        log.info("------getPersonalInfo-------");

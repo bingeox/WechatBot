@@ -15,6 +15,7 @@ public class BaseMessage implements Serializable {
     private String sender;
     private String srvid;
     private String time;
+    private String ext;
 
     public BaseMessage() {
         this.id = String.valueOf(System.currentTimeMillis());

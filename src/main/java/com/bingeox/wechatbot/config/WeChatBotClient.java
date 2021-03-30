@@ -1,8 +1,5 @@
 package com.bingeox.wechatbot.config;
 
-import com.alibaba.fastjson.JSON;
-import com.bingeox.wechatbot.entity.message.BaseMessage;
-import com.bingeox.wechatbot.handler.WeChatMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -22,10 +19,19 @@ public class WeChatBotClient extends WebSocketClient {
         super(new URI(url));
     }
 
+    public void sendMsg(String json) {
+        try {
+            this.send(json);
+        } catch (Exception ex) {
+            log.error("sendMsg failed，send json:{} ex:{}", json, ex);
+        }
+    }
+
     @Override
     public void onMessage(String message) {
-        WeChatMessageHandler handler = applicationContext.getBean(WeChatMessageHandler.class);
-        handler.handMessage(JSON.parseObject(message, BaseMessage.class));
+        log.info("原始消息：{}",message);
+//        WeChatMessageHandler handler = applicationContext.getBean(WeChatMessageHandler.class);
+//        handler.handMessage(JSON.parseObject(message, BaseMessage.class));
     }
 
     @Override
