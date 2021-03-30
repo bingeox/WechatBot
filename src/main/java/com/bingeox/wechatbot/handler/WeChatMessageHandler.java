@@ -98,7 +98,7 @@ public class WeChatMessageHandler {
      * 获取微信所有群，只有 roomId和群成员wxid
      */
     public void getChatRoomContactList() {
-        NormalMessage sendMsg = new NormalMessage();
+        RoomMessage sendMsg = new RoomMessage();
         sendMsg.setWxid(Constants.NULL);
         sendMsg.setContent(Constants.CHATROOM_LIST);
         sendMsg.setType(TypeEnum.CHATROOM_MEMBER.getType());
@@ -128,7 +128,7 @@ public class WeChatMessageHandler {
      * @param roomId
      */
     public void getChatNickByRoomId(String roomId) {
-        NormalMessage sendMsg = new NormalMessage();
+        RoomMessage sendMsg = new RoomMessage();
         sendMsg.setWxid(Constants.ROOT);
         sendMsg.setContent(roomId);
         sendMsg.setType(TypeEnum.CHATROOM_MEMBER_NICK.getType());
@@ -188,9 +188,7 @@ public class WeChatMessageHandler {
         try {
             client.send(json);
         } catch (Exception e) {
-            /**
-             * 这块我本来用于发送微信失败补偿邮件
-             */
+            log.info("send msg failed, send json:{} ex:{}",json, e);
         }
     }
 
