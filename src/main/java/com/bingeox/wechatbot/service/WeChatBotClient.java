@@ -12,12 +12,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Slf4j
-public class WeChatPushService extends WebSocketClient {
+public class WeChatBotClient extends WebSocketClient {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public WeChatPushService(String url) throws URISyntaxException {
+    public WeChatBotClient(String url) throws URISyntaxException {
         super(new URI(url));
     }
 

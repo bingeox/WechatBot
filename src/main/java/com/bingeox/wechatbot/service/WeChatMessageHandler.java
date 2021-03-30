@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class WeChatMessageHandler {
 
     @Autowired
-    private WeChatPushService weChatPushService;
+    private WeChatBotClient client;
     @Autowired
     private OwnThinkRobot ownThinkRobot;
 
@@ -185,7 +185,7 @@ public class WeChatMessageHandler {
 
     private void sendMsg(String json) {
         try {
-            weChatPushService.send(json);
+            client.send(json);
         } catch (Exception e) {
             /**
              * 这块我本来用于发送微信失败补偿邮件
