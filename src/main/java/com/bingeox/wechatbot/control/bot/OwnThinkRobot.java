@@ -1,9 +1,14 @@
 package com.bingeox.wechatbot.control.bot;
 
+import cn.hutool.core.codec.Rot;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bingeox.wechatbot.entity.bot.OwnThinkReq;
-import com.bingeox.wechatbot.entity.bot.OwnThinkResp;
+import com.alibaba.fastjson.TypeReference;
+import com.bingeox.wechatbot.constant.AnswerTypeEnum;
+import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.entity.BotResult;
+import com.bingeox.wechatbot.entity.bot.OwnThinkParam;
+import com.bingeox.wechatbot.entity.bot.OwnThinkResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import org.springframework.stereotype.Component;
 
@@ -17,28 +22,29 @@ import java.util.Scanner;
 @Component
 public class OwnThinkRobot implements Robot {
 
-    private static final String APPID = "3f9ae1c73db460f4bbb2b491c9119eec";
-    private static final String USERID = "kCjfFafA";
+    private static final String APP_KEY = "3f9ae1c73db460f4bbb2b491c9119eec";
     private static final String URL = "https://api.ownthink.com/bot";
 
     /**
      * https://api.ownthink.com/bot?appid=3f9ae1c73db460f4bbb2b491c9119eec&userid=kCjfFafA&spoken=你有多高
      *
      * @param text
-     * @return
+     * @return answer
      */
     @Override
     public String getMessage(String text) {
-        OwnThinkReq req = new OwnThinkReq(text, APPID, USERID);
-        JSONObject resp = HttpClientUtils.httpPost(URL, JSON.toJSONString(req));
-        if (resp.get("message").equals("success")) {
-            OwnThinkResp data = JSONObject.parseObject(resp.get("data").toString(), OwnThinkResp.class);
-            if (data.getType() == 5000) {
-                return data.getInfo().getText();
+        OwnThinkParam param = new OwnThinkParam(text, APP_KEY, Rot.encode13(USER_ID));
+        JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
+        BotResult<OwnThinkResult> botResult = resp.toJavaObject(new TypeReference<BotResult<OwnThinkResult>>() {
+        });
+        String answer = "搜噶";
+        if (botResult.getMessage().equals(Constants.SUCCESS)) {
+            OwnThinkResult data = botResult.getData();
+            if (data.getType() == AnswerTypeEnum.TXT.getType()) {
+                answer = (data.getInfo() != null ? data.getInfo().getText() : answer);
             }
-            return "";
         }
-        return "搜噶";
+        return answer;
     }
 
     public static void main(String[] args) {

@@ -6,6 +6,9 @@ package com.bingeox.wechatbot.control.bot;
  * @since 2021/3/30 0030
  **/
 public interface Robot {
+
+    String USER_ID = "Wechat-bot-001";
+
     /**
      * 机器人自动回复
      *

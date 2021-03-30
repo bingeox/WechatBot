@@ -10,9 +10,16 @@ public class Constants {
     public static final String ROOT = "ROOT";
     public static final String NULL = "null";
     public static final String NONE = "none";
+    public static final String SUCCESS = "success";
     public static final String CHATROOM_LIST = "op:list member";
     public static final String CONTRACT_LIST = "user list";
     public static final String PERSONAL_DETAIL = "op:personal detail";
     public static final String PERSONAL_INFO = "op:personal info";
+    public static final String WECHAT_TEXT = "wechat.text";
+
+    public static final Integer ZERO = 0;
+    public static final Integer TWO_HUNDRED = 200;
+
+
 
 }
