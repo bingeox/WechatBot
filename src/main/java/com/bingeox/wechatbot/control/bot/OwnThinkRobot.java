@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @since 2021/3/30
  **/
 @Component
-public class OwnThinkRobot {
+public class OwnThinkRobot implements Robot {
 
     private static final String APPID = "3f9ae1c73db460f4bbb2b491c9119eec";
     private static final String USERID = "kCjfFafA";
@@ -27,6 +27,7 @@ public class OwnThinkRobot {
      * @param text
      * @return
      */
+    @Override
     public String getMessage(String text) {
         OwnThinkReq req = new OwnThinkReq(text, APPID, USERID);
         JSONObject resp = HttpClientUtils.httpPost(URL, JSON.toJSONString(req));
