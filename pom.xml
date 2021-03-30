@@ -11,8 +11,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>pro.mickey</groupId>
-    <artifactId>WechatBot</artifactId>
+    <groupId>com.bingeox</groupId>
+    <artifactId>wechatbot</artifactId>
     <version>latest</version>
 
     <properties>

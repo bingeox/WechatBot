@@ -1,7 +1,8 @@
-package com.bingeox.wechatbot.service;
+package com.bingeox.wechatbot.config;
 
 import com.alibaba.fastjson.JSON;
 import com.bingeox.wechatbot.entity.message.BaseMessage;
+import com.bingeox.wechatbot.handler.WeChatMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;

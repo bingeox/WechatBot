@@ -1,5 +1,6 @@
-package com.bingeox.wechatbot.service;
+package com.bingeox.wechatbot.handler;
 
+import com.bingeox.wechatbot.config.WeChatBotClient;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.TypeEnum;
 import com.bingeox.wechatbot.control.bot.OwnThinkRobot;
