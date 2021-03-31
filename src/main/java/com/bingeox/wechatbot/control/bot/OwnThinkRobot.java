@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.AnswerTypeEnum;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.BotResult;
+import com.bingeox.wechatbot.entity.Result;
 import com.bingeox.wechatbot.entity.bot.OwnThinkParam;
 import com.bingeox.wechatbot.entity.bot.OwnThinkResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description 思知机器人，接口地址:<https://www.ownthink.com/> userid 可为空
  * @since 2021/3/30
  **/
@@ -35,11 +35,11 @@ public class OwnThinkRobot implements Robot {
     public String getMessage(String text) {
         OwnThinkParam param = new OwnThinkParam(text, APP_KEY, Rot.encode13(USER_ID));
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
-        BotResult<OwnThinkResult> botResult = resp.toJavaObject(new TypeReference<BotResult<OwnThinkResult>>() {
+        Result<OwnThinkResult> result = resp.toJavaObject(new TypeReference<Result<OwnThinkResult>>() {
         });
         String answer = "搜噶";
-        if (botResult.getMessage().equals(Constants.SUCCESS)) {
-            OwnThinkResult data = botResult.getData();
+        if (result.getMessage().equals(Constants.SUCCESS)) {
+            OwnThinkResult data = result.getData();
             if (data.getType() == AnswerTypeEnum.TXT.getType()) {
                 answer = (data.getInfo() != null ? data.getInfo().getText() : answer);
             }

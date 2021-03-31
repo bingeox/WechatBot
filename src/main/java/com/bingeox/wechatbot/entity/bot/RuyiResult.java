@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description
  * @since 2021/3/30
  **/

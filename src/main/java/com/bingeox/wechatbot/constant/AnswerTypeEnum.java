@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description
  * @since 2021/3/30
  **/

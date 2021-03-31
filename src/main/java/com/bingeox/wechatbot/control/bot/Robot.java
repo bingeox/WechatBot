@@ -1,7 +1,7 @@
 package com.bingeox.wechatbot.control.bot;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description
  * @since 2021/3/30 0030
  **/

@@ -4,6 +4,7 @@ import com.bingeox.wechatbot.config.WeChatBotClient;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.TypeEnum;
 import com.bingeox.wechatbot.control.bot.OwnThinkRobot;
+import com.bingeox.wechatbot.control.bot.RuyiRobot;
 import com.bingeox.wechatbot.entity.message.BaseMessage;
 import com.bingeox.wechatbot.entity.message.NormalMessage;
 import com.bingeox.wechatbot.entity.message.RoomMessage;
@@ -23,6 +24,8 @@ public class WeChatMessageHandler {
     private WeChatBotClient client;
     @Autowired
     private OwnThinkRobot ownThinkRobot;
+    @Autowired
+    private RuyiRobot ruyiRobot;
 
     @Value("${special.wxid}")
     private String specialWxId;
@@ -31,7 +34,7 @@ public class WeChatMessageHandler {
         log.info("收到消息：" + message);
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
             if (message.getSender().equals(specialWxId)) {
-                sendTextMsg(specialWxId, ownThinkRobot.getMessage(message.getContent().toString()));
+                sendTextMsg(specialWxId, ruyiRobot.getMessage(message.getContent().toString()));
             }
 
             if (message.getSender().equals(Constants.SELF)) {

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description
  * @since 2021/3/30
  **/
