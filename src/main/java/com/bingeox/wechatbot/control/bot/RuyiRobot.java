@@ -1,6 +1,5 @@
 package com.bingeox.wechatbot.control.bot;
 
-import cn.hutool.core.codec.Rot;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -26,9 +25,20 @@ public class RuyiRobot implements Robot {
     private static final String APP_KEY = "3b4b4d8f-72c6-40a9-b5f8-c058f668c056";
     private static final String URL = "http://api.ruyi.ai/v1/message";
 
+    /**
+     * Code
+     * 0／200	成功	请求成功
+     * 400	无效请求	某些必需参数缺失或参数值错误，详见msg字段
+     * 401	未授权	授权失败，app_key缺失或错误
+     * 403	请求被禁止	有效请求，但服务拒绝响应，请联系contact@ruyi.ai
+     * 408	请求超时	请求响应超时，一般响应时间设置为2000ms以内
+     * 429	短时间内大量访问	短时间内请求数过多
+     * 500	内部错误	服务处理异常
+     * 503	服务不可用	服务异常或正在维护
+     */
     @Override
     public String getMessage(String text) {
-        RuyiParam param = new RuyiParam(text, APP_KEY, Rot.encode13(USER_ID));
+        RuyiParam param = new RuyiParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         Result<RuyiResult> result = resp.toJavaObject(new TypeReference<Result<RuyiResult>>() {
         });

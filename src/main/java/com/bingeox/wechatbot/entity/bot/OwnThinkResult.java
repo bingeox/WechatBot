@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Data
 public class OwnThinkResult implements Serializable {
     private static final long serialVersionUID = -3404115733111557203L;
+
     // 答案类型，5000文本类型
     private int type;
     private Info info;

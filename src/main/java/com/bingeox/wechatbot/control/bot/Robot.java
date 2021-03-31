@@ -1,5 +1,8 @@
 package com.bingeox.wechatbot.control.bot;
 
+import cn.hutool.core.codec.Base32;
+import com.bingeox.wechatbot.constant.Constants;
+
 /**
  * @author bingeox
  * @description
@@ -7,7 +10,7 @@ package com.bingeox.wechatbot.control.bot;
  **/
 public interface Robot {
 
-    String USER_ID = "Wechat-bot-001";
+    String USER_ID = Base32.encode(Constants.USER_ID);
 
     /**
      * 机器人自动回复

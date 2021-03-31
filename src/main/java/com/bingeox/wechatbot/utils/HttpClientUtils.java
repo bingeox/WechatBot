@@ -39,6 +39,7 @@ public class HttpClientUtils {
      * @return
      */
     public static JSONObject httpPost(String url, JSONObject jsonParam) {
+        logger.info("do post,param:{}",jsonParam);
         // post请求返回结果
         CloseableHttpClient httpClient = HttpClients.createDefault();
         JSONObject jsonResult = null;
@@ -83,6 +84,7 @@ public class HttpClientUtils {
      * @return
      */
     public static JSONObject httpPost(String url, String strParam) {
+        logger.info("do post,param:{}",strParam);
         // post请求返回结果
         CloseableHttpClient httpClient = HttpClients.createDefault();
         JSONObject jsonResult = null;

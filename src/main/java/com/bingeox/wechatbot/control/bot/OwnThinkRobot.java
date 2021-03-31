@@ -1,6 +1,5 @@
 package com.bingeox.wechatbot.control.bot;
 
-import cn.hutool.core.codec.Rot;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -26,14 +25,14 @@ public class OwnThinkRobot implements Robot {
     private static final String URL = "https://api.ownthink.com/bot";
 
     /**
-     * https://api.ownthink.com/bot?appid=3f9ae1c73db460f4bbb2b491c9119eec&userid=kCjfFafA&spoken=你有多高
+     * message：success表示请求正确，error表示请求错误
      *
      * @param text
      * @return answer
      */
     @Override
     public String getMessage(String text) {
-        OwnThinkParam param = new OwnThinkParam(text, APP_KEY, Rot.encode13(USER_ID));
+        OwnThinkParam param = new OwnThinkParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         Result<OwnThinkResult> result = resp.toJavaObject(new TypeReference<Result<OwnThinkResult>>() {
         });

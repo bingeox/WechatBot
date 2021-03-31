@@ -2,6 +2,7 @@ package com.bingeox.wechatbot.constant;
 
 public class Constants {
 
+    public static final String USER_ID = "Wechat-bot-001";
     public static final String FILE_HELPER = "filehelper";
     /**
      * 手机端通过文件传输助手发消息时，sender = self，receiver = filehelper
