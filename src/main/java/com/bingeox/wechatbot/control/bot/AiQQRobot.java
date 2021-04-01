@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 /**
- * @author xiaobing@meicai.cn
+ * @author bingeox
  * @description 智能闲聊（腾讯）<https://ai.qq.com/product/nlpchat.shtml>
  *     接口文档：<https://ai.qq.com/doc/nlpchat.shtml>
  * @since 2021/4/1
@@ -53,5 +53,6 @@ public class AiQQRobot implements Robot {
             String message = robot.getMessage(str);
             System.out.println(message);
         }
+
     }
 }

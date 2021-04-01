@@ -1,6 +1,6 @@
 package com.bingeox.wechatbot.entity.bot;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,7 +21,7 @@ public class TianResult implements Serializable {
     /**
      * 数据类型：text文本；view图文；image图片
      */
-    @JsonProperty("datatype")
+    @JSONField(name="datatype")
     private String dataType;
 
 }

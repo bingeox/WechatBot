@@ -5,7 +5,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.digest.MD5;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,12 +36,12 @@ public class AiQQParam implements Serializable {
      * question	  是 string	UTF-8编码，非空且长度上限300字节	你叫啥	用户输入的聊天内容
      */
     private String question;
-    @JsonProperty(value = "app_id")
+    @JSONField(name = "app_id")
     private Long appId;
     private String session;
-    @JsonProperty(value = "time_stamp")
+    @JSONField(name = "time_stamp")
     private Long timeStamp;
-    @JsonProperty(value = "nonce_str")
+    @JSONField(name = "nonce_str")
     private String nonceStr;
     private String sign;
 
