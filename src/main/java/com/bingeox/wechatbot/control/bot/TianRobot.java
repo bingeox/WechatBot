@@ -47,7 +47,7 @@ public class TianRobot implements Robot {
         TianParam param = new TianParam(text, APP_KEY, USER_ID, ReqTypeEnum.TEXT.getType());
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
-        if (resp.get("code") == Constants.TWO_HUNDRED){
+        if (resp.getIntValue("code") == Constants.TWO_HUNDRED){
             List<TianResult> newslist = JSON.parseObject(resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
             });
             TianResult tianResult = newslist.stream()

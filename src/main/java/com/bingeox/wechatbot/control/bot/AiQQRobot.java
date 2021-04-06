@@ -35,7 +35,7 @@ public class AiQQRobot implements Robot {
         param.setReqSign(APP_KEY);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
-        if (resp.get("ret") == Constants.ZERO){
+        if (resp.getIntValue("ret") == Constants.ZERO){
             AiQQResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<AiQQResult>() {
             });
             answer = (data != null ? data.getAnswer() : answer);

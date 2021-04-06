@@ -34,7 +34,7 @@ public class OwnThinkRobot implements Robot {
         OwnThinkParam param = new OwnThinkParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
-        if (resp.get("message").equals(Constants.SUCCESS)) {
+        if (resp.getString("message").equals(Constants.SUCCESS)) {
             OwnThinkResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<OwnThinkResult>() {
             });
             if (data.getType() == AnswerTypeEnum.TXT.getType()) {
