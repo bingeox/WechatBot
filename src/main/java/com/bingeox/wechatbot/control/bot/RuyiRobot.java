@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.Result;
 import com.bingeox.wechatbot.entity.bot.RuyiParam;
 import com.bingeox.wechatbot.entity.bot.RuyiResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -40,11 +39,11 @@ public class RuyiRobot implements Robot {
     public String getMessage(String text) {
         RuyiParam param = new RuyiParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
-        Result<RuyiResult> result = resp.toJavaObject(new TypeReference<Result<RuyiResult>>() {
-        });
         String answer = "搜噶";
-        if (result.getCode() == Constants.ZERO || result.getCode() == Constants.TWO_HUNDRED){
-            List<RuyiResult.Intent.Output> outputs = result.getData().getIntents().get(0).getOutputs();
+        if (resp.get("code") == Constants.ZERO || resp.get("code") == Constants.TWO_HUNDRED){
+            RuyiResult ruyiResult = JSON.parseObject(resp.get("result").toString(), new TypeReference<RuyiResult>() {
+            });
+            List<RuyiResult.Intent.Output> outputs = ruyiResult.getIntents().get(0).getOutputs();
             RuyiResult.Intent.Output output = outputs.stream().filter(o -> o.getType().equals(Constants.WECHAT_TEXT)).findFirst().get();
             answer = (output.getProperty() != null ? output.getProperty().getText() : answer);
         }

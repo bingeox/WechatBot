@@ -1,7 +1,6 @@
 package com.bingeox.wechatbot.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,16 +14,13 @@ import java.io.Serializable;
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = -3404115733111557203L;
 
-    @JsonProperty(value = "code")
-    @JsonAlias(value = {"ret"})
+    @JsonAlias("ret")
     private int code;
 
-    @JsonProperty(value = "message")
-    @JsonAlias(value = {"msg"})
+    @JsonAlias("msg")
     private String message;
 
-    @JsonProperty(value = "data")
-    @JsonAlias(value = {"result", "newslist"})
+    @JsonAlias({"result", "newslist"})
     private T data;
 
 }

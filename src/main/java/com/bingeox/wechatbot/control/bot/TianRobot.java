@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.ReqTypeEnum;
-import com.bingeox.wechatbot.entity.Result;
 import com.bingeox.wechatbot.entity.bot.TianParam;
 import com.bingeox.wechatbot.entity.bot.TianResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -47,11 +46,12 @@ public class TianRobot implements Robot {
     public String getMessage(String text) {
         TianParam param = new TianParam(text, APP_KEY, USER_ID, ReqTypeEnum.TEXT.getType());
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
-        Result<List<TianResult>> result = resp.toJavaObject(new TypeReference<Result<List<TianResult>>>() {
-        });
         String answer = "搜噶";
-        if (result.getCode() == Constants.TWO_HUNDRED){
-            TianResult tianResult = result.getData().stream().filter(r -> r.getDataType().equals(Constants.TEXT)).findAny().get();
+        if (resp.get("code") == Constants.TWO_HUNDRED){
+            List<TianResult> newslist = JSON.parseObject(resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
+            });
+            TianResult tianResult = newslist.stream()
+                    .filter(r -> r.getDataType().equals(Constants.TEXT)).findAny().get();
             answer = (tianResult != null ? tianResult.getReply() : answer);
         }
         return answer;

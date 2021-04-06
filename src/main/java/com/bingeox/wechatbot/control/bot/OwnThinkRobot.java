@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.AnswerTypeEnum;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.Result;
 import com.bingeox.wechatbot.entity.bot.OwnThinkParam;
 import com.bingeox.wechatbot.entity.bot.OwnThinkResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -34,11 +33,10 @@ public class OwnThinkRobot implements Robot {
     public String getMessage(String text) {
         OwnThinkParam param = new OwnThinkParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
-        Result<OwnThinkResult> result = resp.toJavaObject(new TypeReference<Result<OwnThinkResult>>() {
-        });
         String answer = "搜噶";
-        if (result.getMessage().equals(Constants.SUCCESS)) {
-            OwnThinkResult data = result.getData();
+        if (resp.get("message").equals(Constants.SUCCESS)) {
+            OwnThinkResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<OwnThinkResult>() {
+            });
             if (data.getType() == AnswerTypeEnum.TXT.getType()) {
                 answer = (data.getInfo() != null ? data.getInfo().getText() : answer);
             }

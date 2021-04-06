@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.Result;
 import com.bingeox.wechatbot.entity.bot.AiQQParam;
 import com.bingeox.wechatbot.entity.bot.AiQQResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -35,11 +34,10 @@ public class AiQQRobot implements Robot {
         AiQQParam param = new AiQQParam(text, APP_ID, USER_ID);
         param.setReqSign(APP_KEY);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
-        Result<AiQQResult> result = resp.toJavaObject(new TypeReference<Result<AiQQResult>>() {
-        });
         String answer = "搜噶";
-        if (result.getCode() == Constants.ZERO){
-            AiQQResult data = result.getData();
+        if (resp.get("ret") == Constants.ZERO){
+            AiQQResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<AiQQResult>() {
+            });
             answer = (data != null ? data.getAnswer() : answer);
         }
         return answer;
