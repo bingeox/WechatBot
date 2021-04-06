@@ -1,6 +1,6 @@
 package com.bingeox.wechatbot.entity.bot;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,10 +24,9 @@ public class TianParam implements Serializable {
      * priv	int	否	0	私有词库匹配模式，完整匹配0[默认]、智能匹配1，模糊匹配2，结尾匹配3，开头匹配4
      * restype	int	否	0	输入类型，文本0、语音1、人脸图片2
      */
-    @JsonProperty(value = "key")
     private String key;
     private String question;
-    @JsonProperty(value = "uniqueid")
+    @JSONField(name = "uniqueid")
     private String uniqueId;
     private int restype;
     private int mode;

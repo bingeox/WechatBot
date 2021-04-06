@@ -1,6 +1,6 @@
 package com.bingeox.wechatbot.entity.bot;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +19,9 @@ public class OwnThinkParam implements Serializable {
     private static final long serialVersionUID = -3404115733111557203L;
 
     private String spoken;
-    @JsonProperty(value = "appid")
+    @JSONField(name = "appid")
     private String appId;
-    @JsonProperty(value = "userid")
+    @JSONField(name = "userid")
     private String userId;
 
 }
