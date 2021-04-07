@@ -1,0 +1,104 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+    					http://maven.apache.org/xsd/settings-1.0.0.xsd">
+		<localRepository>D:/maven_respo</localRepository>
+	<servers>
+		<server>
+			<id>API</id>
+			<username>develop</username>
+			<password>000000</password>
+		</server>
+		<server>
+			<id>snapshot</id>
+			<username>develop</username>
+			<password>000000</password>
+		</server>
+	</servers>
+	<mirrors>
+		<mirror>
+			<id>nexus</id>
+			<name>sprucetec nexus.</name>
+			<mirrorOf>nexus</mirrorOf>
+			<url>http://mvn.sprucetec.com/nexus/content/groups/public</url>
+		</mirror>
+		<mirror>
+			<id>alimaven</id>
+			<name>aliyun maven</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<mirrorOf>central</mirrorOf>
+		</mirror>
+		<mirror>
+			<id>central</id>
+			<name>central</name>
+			<url>http://repo1.maven.org/maven2/</url>
+			<mirrorOf>central</mirrorOf>
+		</mirror>
+		<mirror>
+			<id>nexus</id>
+			<name>internal nexus repository</name>
+			<!-- <url>http://192.168.1.100:8081/nexus/content/groups/public/</url>-->
+			<url>https://repo.maven.apache.org/maven2</url>
+			<mirrorOf>central</mirrorOf>
+		</mirror>
+	</mirrors>
+	<profiles>
+		<profile>
+			<id>nexus</id>
+			<repositories>
+				<repository>
+					<id>nexus</id>
+					<name>sprucetec nexus</name>
+					<url>http://mvn.sprucetec.com/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>alimaven</id>
+					<name>aliyun maven</name>
+					<layout>default</layout>
+					<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>central</id>
+					<name>Maven Repository Switchboard</name>
+					<layout>default</layout>
+					<url>http://repo1.maven.org/maven2</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>nexus</id>
+					<name>sprucetec nexus</name>
+					<url>http://mvn.sprucetec.com/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	<activeProfiles>
+		<activeProfile>nexus</activeProfile>
+	</activeProfiles>
+</settings>
+
