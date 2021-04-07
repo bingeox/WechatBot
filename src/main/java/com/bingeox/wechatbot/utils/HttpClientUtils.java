@@ -123,11 +123,22 @@ public class HttpClientUtils {
      * 发送get请求
      *
      * @param url 路径
-     * @return
+     * @return 返回json格式数据
      */
     public static JSONObject httpGet(String url) {
+        // 把json字符串转换成json对象
+        return JSONObject.parseObject(httpGet_Str(url));
+    }
+
+    /**
+     * 发送get请求
+     *
+     * @param url 路径
+     * @return 返回 string 格式数据
+     */
+    public static String httpGet_Str(String url) {
         // get请求返回结果
-        JSONObject jsonResult = null;
+        String strResult = "";
         CloseableHttpClient client = HttpClients.createDefault();
         // 发送get请求
         HttpGet request = new HttpGet(url);
@@ -137,11 +148,9 @@ public class HttpClientUtils {
 
             // 请求发送成功，并得到响应
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                // 读取服务器返回过来的json字符串数据
+                // 读取服务器返回过来的字符串数据
                 HttpEntity entity = response.getEntity();
-                String strResult = EntityUtils.toString(entity, "utf-8");
-                // 把json字符串转换成json对象
-                jsonResult = JSONObject.parseObject(strResult);
+                strResult = EntityUtils.toString(entity, "utf-8");
             } else {
                 logger.error("get请求提交失败:" + url);
             }
@@ -150,6 +159,6 @@ public class HttpClientUtils {
         } finally {
             request.releaseConnection();
         }
-        return jsonResult;
+        return strResult;
     }
 }
