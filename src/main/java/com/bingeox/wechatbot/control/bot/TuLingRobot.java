@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.ReqTypeEnum;
+import com.bingeox.wechatbot.entity.BotRetModel;
 import com.bingeox.wechatbot.entity.bot.TuLingParam;
 import com.bingeox.wechatbot.entity.bot.TuLingResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -49,7 +50,7 @@ public class TuLingRobot implements Robot {
     );
 
     @Override
-    public String getMessage(String text) {
+    public BotRetModel getMessage(String text) {
         TuLingParam param = new TuLingParam(text, APP_KEY, USER_ID, ReqTypeEnum.TEXT);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         TuLingResult result = resp.toJavaObject(new TypeReference<TuLingResult>() {
@@ -58,7 +59,8 @@ public class TuLingRobot implements Robot {
         if (!ERROR_CODE.contains(result.getIntent().getCode())){
             TuLingResult.Results results = result.getResults().stream().filter(r -> r.getResultType().equals(Constants.TEXT)).findAny().get();
             answer = (results.getValues() != null ? results.getValues().getValue() : answer);
+            return BotRetModel.success(answer);
         }
-        return answer;
+        return BotRetModel.fail();
     }
 }

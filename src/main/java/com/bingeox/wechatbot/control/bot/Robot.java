@@ -2,6 +2,7 @@ package com.bingeox.wechatbot.control.bot;
 
 import cn.hutool.core.codec.Base32;
 import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.entity.BotRetModel;
 
 /**
  * @author bingeox
@@ -18,5 +19,5 @@ public interface Robot {
      * @param text
      * @return answer
      */
-    String getMessage(String text);
+    BotRetModel getMessage(String text);
 }
