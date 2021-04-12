@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.AnswerTypeEnum;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.BotRetModel;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.OwnThinkParam;
 import com.bingeox.wechatbot.entity.bot.OwnThinkResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -31,7 +31,7 @@ public class OwnThinkRobot implements Robot {
      * @return answer
      */
     @Override
-    public BotRetModel getMessage(String text) {
+    public RetModel getMessage(String text) {
         OwnThinkParam param = new OwnThinkParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
@@ -41,9 +41,9 @@ public class OwnThinkRobot implements Robot {
             if (data.getType() == AnswerTypeEnum.TXT.getType()) {
                 answer = (data.getInfo() != null ? data.getInfo().getText() : answer);
             }
-            return BotRetModel.success(answer);
+            return RetModel.success(answer);
         }
-        return BotRetModel.fail();
+        return RetModel.fail();
     }
 
     public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class OwnThinkRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            BotRetModel model = robot.getMessage(str);
+            RetModel model = robot.getMessage(str);
             System.out.println(model.getMessage());
         }
 

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.ReqTypeEnum;
-import com.bingeox.wechatbot.entity.BotRetModel;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.TianParam;
 import com.bingeox.wechatbot.entity.bot.TianResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -44,7 +44,7 @@ public class TianRobot implements Robot {
      * 1开头的是系统级错误，2开头的是用户级错误，其中200代码表示请求成功处理。
      */
     @Override
-    public BotRetModel getMessage(String text) {
+    public RetModel getMessage(String text) {
         TianParam param = new TianParam(text, APP_KEY, USER_ID, ReqTypeEnum.TEXT.getType());
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
@@ -54,9 +54,9 @@ public class TianRobot implements Robot {
             TianResult tianResult = newslist.stream()
                     .filter(r -> r.getDataType().equals(Constants.TEXT)).findAny().get();
             answer = (tianResult != null ? tianResult.getReply() : answer);
-            return BotRetModel.success(answer);
+            return RetModel.success(answer);
         }
-        return BotRetModel.fail();
+        return RetModel.fail();
     }
 
     public static void main(String[] args) {
@@ -64,7 +64,7 @@ public class TianRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            BotRetModel model = robot.getMessage(str);
+            RetModel model = robot.getMessage(str);
             System.out.println(model.getMessage());
         }
     }

@@ -1,8 +1,12 @@
 package com.bingeox.wechatbot.control.bot;
 
-import com.bingeox.wechatbot.entity.BotRetModel;
+import com.bingeox.wechatbot.entity.RetModel;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @author xiaobing@meicai.cn
@@ -23,31 +27,26 @@ public class RobotFactory {
     @Autowired
     private TuLingRobot tuLingRobot;
 
+    private static List<Robot> robots;
+
+    @PostConstruct
+    public void initRobot(){
+        robots = Lists.newLinkedList();
+        robots.add(ruyiRobot);
+        robots.add(ownThinkRobot);
+        robots.add(aiQQRobot);
+        robots.add(tianRobot);
+        robots.add(tuLingRobot);
+    }
+
     public String getMessage(String question){
         //默认使用 ruyiRobot
         String answer = "搜噶";
-        BotRetModel ruyi = ruyiRobot.getMessage(question);
-        if (ruyi.isRet()){
-            answer = ruyi.getMessage();
-        } else {
-            BotRetModel own = ownThinkRobot.getMessage(question);
-            if (own.isRet()){
-                answer = own.getMessage();
-            } else {
-                BotRetModel qq = aiQQRobot.getMessage(question);
-                if (qq.isRet()){
-                    answer = qq.getMessage();
-                } else {
-                    BotRetModel tian = tianRobot.getMessage(question);
-                    if (tian.isRet()){
-                        answer = tian.getMessage();
-                    } else {
-                        BotRetModel tu = tuLingRobot.getMessage(question);
-                        if (tu.isRet()){
-                            answer = tu.getMessage();
-                        }
-                    }
-                }
+        for (Robot robot : robots) {
+            RetModel model = robot.getMessage(question);
+            if (model.isRet()){
+                answer = model.getMessage();
+                break;
             }
         }
         return answer;

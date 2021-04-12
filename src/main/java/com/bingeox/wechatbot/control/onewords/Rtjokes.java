@@ -1,9 +1,11 @@
 package com.bingeox.wechatbot.control.onewords;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,8 +18,17 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class Rtjokes {
+public class Rtjokes implements Oneword {
     private static final String URL = "https://www.mxnzp.com/api/jokes/list/random?app_id=qcqfdpg8v0ako9pq&app_secret=WGFKK3FjbDdDMXc5T2l3Q2RFSmpxQT09";
+
+    @Override
+    public RetModel getOneword() {
+        String info = getRtjokesInfo();
+        if (StrUtil.isNotBlank(info)){
+            return RetModel.success(info);
+        }
+        return RetModel.fail();
+    }
 
     public String getRtjokesInfo(){
         String rtjokes = "";

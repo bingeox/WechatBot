@@ -1,5 +1,7 @@
 package com.bingeox.wechatbot.control.onewords;
 
+import cn.hutool.core.util.StrUtil;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,8 +13,17 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class LoveLive {
+public class LoveLive implements Oneword {
     private static final String URL = "https://api.lovelive.tools/api/SweetNothings";
+
+    @Override
+    public RetModel getOneword() {
+        String info = getLoveLiveInfo();
+        if (StrUtil.isNotBlank(info)){
+            return RetModel.success(info);
+        }
+        return RetModel.fail();
+    }
 
     public String getLoveLiveInfo(){
         String lovelive = "";

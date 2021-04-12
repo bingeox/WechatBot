@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
-import com.bingeox.wechatbot.entity.BotRetModel;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.AiQQParam;
 import com.bingeox.wechatbot.entity.bot.AiQQResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -31,7 +31,7 @@ public class AiQQRobot implements Robot {
      * data	是	object	返回数据；ret为0时有意义
      */
     @Override
-    public BotRetModel getMessage(String text) {
+    public RetModel getMessage(String text) {
         AiQQParam param = new AiQQParam(text, APP_ID, USER_ID);
         param.setReqSign(APP_KEY);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
@@ -40,9 +40,9 @@ public class AiQQRobot implements Robot {
             AiQQResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<AiQQResult>() {
             });
             answer = (data != null ? data.getAnswer() : answer);
-            return BotRetModel.success(answer);
+            return RetModel.success(answer);
         }
-        return BotRetModel.fail();
+        return RetModel.fail();
     }
 
     public static void main(String[] args) {
@@ -50,7 +50,7 @@ public class AiQQRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            BotRetModel model = robot.getMessage(str);
+            RetModel model = robot.getMessage(str);
             System.out.println(model.getMessage());
         }
 

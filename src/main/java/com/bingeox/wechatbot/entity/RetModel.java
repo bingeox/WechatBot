@@ -10,21 +10,21 @@ import lombok.NoArgsConstructor;
  **/
 @Data
 @NoArgsConstructor
-public class BotRetModel {
+public class RetModel {
 
     private boolean ret;
     private String message;
 
-    private BotRetModel(boolean ret, String message) {
+    private RetModel(boolean ret, String message) {
         this.ret = ret;
         this.message = message;
     }
 
-    public static BotRetModel success(String message){
-        return new BotRetModel(true, message);
+    public static RetModel success(String message){
+        return new RetModel(true, message);
     }
 
-    public static BotRetModel fail(){
-        return new BotRetModel(false, null);
+    public static RetModel fail(){
+        return new RetModel(false, null);
     }
 }

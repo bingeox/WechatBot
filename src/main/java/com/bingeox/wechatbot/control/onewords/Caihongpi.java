@@ -1,5 +1,7 @@
 package com.bingeox.wechatbot.control.onewords;
 
+import cn.hutool.core.util.StrUtil;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class Caihongpi {
+public class Caihongpi implements Oneword {
     private static final String URL = "https://chp.shadiao.app/api.php";
 
     public String getCaihongpiInfo(){
@@ -30,4 +32,12 @@ public class Caihongpi {
         System.out.println(caihongpi.getCaihongpiInfo());
     }
 
+    @Override
+    public RetModel getOneword() {
+        String info = getCaihongpiInfo();
+        if (StrUtil.isNotBlank(info)){
+            return RetModel.success(info);
+        }
+        return RetModel.fail();
+    }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.entity.AcibInfo;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,18 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class Aciba {
+public class Aciba implements Oneword {
 
     private static final String URL = "http://open.iciba.com/dsapi";
+
+    @Override
+    public RetModel getOneword() {
+        AcibInfo info = getAcibInfo();
+        if (info.getContent() != null){
+            return RetModel.success(info.getContent()+"\n"+info.getNote());
+        }
+        return RetModel.fail();
+    }
 
     private AcibInfo getAcibInfo() {
         AcibInfo data = new AcibInfo();
