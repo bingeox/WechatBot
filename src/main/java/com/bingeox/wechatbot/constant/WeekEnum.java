@@ -23,4 +23,13 @@ public enum WeekEnum {
     SUNDAY(7,"星期日");
     private int code;
     private String des;
+
+    public static String getDayByCode(int code){
+        for (WeekEnum value : WeekEnum.values()) {
+            if (code == value.code){
+                return value.des;
+            }
+        }
+        return "";
+    }
 }

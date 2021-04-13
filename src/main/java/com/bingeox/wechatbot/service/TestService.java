@@ -4,7 +4,6 @@ import com.bingeox.wechatbot.handler.WeChatMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,7 +16,7 @@ public class TestService {
     @Value("${special.wxid}")
     private String specialWxId;
 
-    @Scheduled(fixedRate = 1000 * 60 * 10)
+//    @Scheduled(fixedRate = 1000 * 60 * 10)
     public void showNews() {
         log.info("------sendTextMsg-------");
         handler.sendTextMsg("filehelper", "我用Java发送的微信！");

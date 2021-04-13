@@ -89,16 +89,18 @@ public class AiQQParam implements Serializable {
             }
         });
         sb.append("app_key=" + appKey);
-        return MD5.create().digestHex(sb.toString()).toUpperCase();
+        return (MD5.create().digestHex(sb.toString())).toUpperCase();
     }
 
     public static void main(String[] args) {
+        String APP_KEY = "AbdjjKfTouCXKExZ";
         Map<String, Object> map = new HashMap<>();
         map.put("ssdc","1221");
         map.put("ddaw","ad1");
         map.put("ewqf","22");
         map.put("ass","dad");
         map.put("fsas","ada");
+        map.put("1sas","ada");
         LinkedHashMap<String, Object> sortedMap = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(
@@ -106,7 +108,14 @@ public class AiQQParam implements Serializable {
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new));
-        System.out.println(sortedMap);
+        StringBuffer sb = new StringBuffer();
+        sortedMap.forEach((k, v) -> {
+            if (v != null && StrUtil.isNotBlank(String.valueOf(v))) {
+                sb.append(k + "=" + URLUtil.encodeAll(String.valueOf(v)).toUpperCase()).append("&");
+            }
+        });
+        sb.append("app_key=" + APP_KEY);
+        System.out.println(sb.toString());
     }
 
 }

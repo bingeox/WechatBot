@@ -34,9 +34,9 @@ public class RobotFactory {
         robots = Lists.newLinkedList();
         robots.add(ruyiRobot);
         robots.add(ownThinkRobot);
-        robots.add(aiQQRobot);
         robots.add(tianRobot);
-        robots.add(tuLingRobot);
+        robots.add(aiQQRobot);
+//        robots.add(tuLingRobot);
     }
 
     public String getMessage(String question){

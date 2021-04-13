@@ -1,9 +1,11 @@
 package com.bingeox.wechatbot.control.calendar;
 
+import cn.hutool.core.date.DateTime;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.constant.WeekEnum;
 import com.bingeox.wechatbot.entity.RtCalendarResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +66,7 @@ public class RtCalendar {
                 }
 
                 returnText = String.format("%s %s 农历%s %s\n【宜】%s\n【忌】%s",
-                        data.getDate(), data.getWeekDay(), data.getLunarCalendar(), solarTerms, suit, avoid);
+                        data.getDate(), WeekEnum.getDayByCode(data.getWeekDay()), data.getLunarCalendar(), solarTerms, suit, avoid);
 
             }
         } catch (Exception ex) {
@@ -75,7 +77,7 @@ public class RtCalendar {
 
     public static void main(String[] args) {
         RtCalendar rtCalendar = new RtCalendar();
-        System.out.println(rtCalendar.getRtCalendar("20210407"));
+        System.out.println(rtCalendar.getRtCalendar(DateTime.now().toString("yyyyMMdd")));
 
     }
 
