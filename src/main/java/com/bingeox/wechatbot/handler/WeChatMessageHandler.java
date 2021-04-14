@@ -33,17 +33,24 @@ public class WeChatMessageHandler {
     private static boolean isPause = true;
 
     public void handMessage(BaseMessage message) {
-        log.info("收到消息：" + message);
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
             if (message.getSender().equals(specialWxId) && isPause) {
+                log.info("收到消息：" + message);
                 sendTextMsg(specialWxId, robotFactory.getMessage(message.getContent().toString()));
             }
 
             if (message.getSender().equals(Constants.SELF)) {
+                log.info("收到消息：" + message);
+                if (Constants.STATUS.endsWith(message.getContent().toString())){
+                    String status = "isPause:" + isPause;
+                    sendTextMsg("filehelper", status);
+                }
                 if (Constants.PAUSE.endsWith(message.getContent().toString())){
                     isPause = false;
                 }
-
+                if (Constants.GO_ON.endsWith(message.getContent().toString())){
+                    isPause = true;
+                }
             }
         }
     }
