@@ -34,13 +34,12 @@ public class WeChatMessageHandler {
 
     public void handMessage(BaseMessage message) {
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
+            log.info("收到消息：" + message);
             if (message.getSender().equals(specialWxId) && isPause) {
-                log.info("收到消息：" + message);
                 sendTextMsg(specialWxId, robotFactory.getMessage(message.getContent().toString()));
             }
 
             if (message.getSender().equals(Constants.SELF)) {
-                log.info("收到消息：" + message);
                 if (Constants.STATUS.endsWith(message.getContent().toString())){
                     String status = "isPause:" + isPause;
                     sendTextMsg("filehelper", status);

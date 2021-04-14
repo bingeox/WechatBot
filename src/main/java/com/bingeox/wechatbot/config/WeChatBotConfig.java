@@ -16,6 +16,7 @@ public class WeChatBotConfig {
     @Bean
     public WeChatBotClient initWeChatBotClient() throws Exception {
         WeChatBotClient client = new WeChatBotClient(weChatUrl);
+        client.setConnectionLostTimeout(0);
         client.connect();
         while (!client.getReadyState().equals(ReadyState.OPEN)) {
             Thread.sleep(200);
