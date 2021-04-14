@@ -27,6 +27,8 @@ public class WeChatMessageHandler {
     @Value("${special.wxid}")
     private String specialWxId;
 
+    private String tempWxId = "wxid_6057790578912";
+
     /**
      * 控制是否需要机器人回复
      */
@@ -39,15 +41,24 @@ public class WeChatMessageHandler {
                 sendTextMsg(specialWxId, robotFactory.getMessage(message.getContent().toString()));
             }
 
+            if (message.getSender().equals(tempWxId)) {
+                sendTextMsg(Constants.FILE_HELPER, "老婆的消息：" + message.getContent());
+            }
+
             if (message.getSender().equals(Constants.SELF)) {
-                if (Constants.STATUS.endsWith(message.getContent().toString())){
-                    String status = "isPause:" + isPause;
-                    sendTextMsg("filehelper", status);
+                String contont = message.getContent().toString();
+                //转发消息
+                if (Constants.TO.startsWith(contont)){
+                    sendTextMsg(tempWxId, contont.replace(Constants.TO, ""));
                 }
-                if (Constants.PAUSE.endsWith(message.getContent().toString())){
+                if (Constants.STATUS.equals(contont)){
+                    String status = "isPause:" + isPause;
+                    sendTextMsg(Constants.FILE_HELPER, status);
+                }
+                if (Constants.PAUSE.equals(contont)){
                     isPause = false;
                 }
-                if (Constants.GO_ON.endsWith(message.getContent().toString())){
+                if (Constants.GO_ON.equals(contont)){
                     isPause = true;
                 }
             }

@@ -25,5 +25,6 @@ public class Constants {
     public static final String PAUSE = "pause";
     public static final String GO_ON = "go";
     public static final String STATUS = "status";
+    public static final String TO = "to:";
 
 }
