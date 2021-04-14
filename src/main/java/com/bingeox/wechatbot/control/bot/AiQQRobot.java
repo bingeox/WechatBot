@@ -1,14 +1,18 @@
 package com.bingeox.wechatbot.control.bot;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.AiQQParam;
 import com.bingeox.wechatbot.entity.bot.AiQQResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -30,17 +34,27 @@ public class AiQQRobot implements Robot {
      * data	是	object	返回数据；ret为0时有意义
      */
     @Override
-    public String getMessage(String text) {
+    public RetModel getMessage(String text) {
         AiQQParam param = new AiQQParam(text, APP_ID, USER_ID);
         param.setReqSign(APP_KEY);
-        JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
+        Map<String, Object> map = BeanUtil.beanToMap(param);
+        StringBuffer sb = new StringBuffer();
+        map.forEach((k, v) -> {
+            if (v != null && StrUtil.isNotBlank(String.valueOf(v))) {
+                sb.append(k + "=" + String.valueOf(v)).append("&");
+            }
+        });
+        String str = sb.toString().substring(0, sb.toString().lastIndexOf("&"));
+
+        JSONObject resp = HttpClientUtils.httpGet(URL+ "?" +str);
         String answer = "搜噶";
         if (resp.getIntValue("ret") == Constants.ZERO){
             AiQQResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<AiQQResult>() {
             });
             answer = (data != null ? data.getAnswer() : answer);
+            return RetModel.success(answer);
         }
-        return answer;
+        return RetModel.fail();
     }
 
     public static void main(String[] args) {
@@ -48,8 +62,8 @@ public class AiQQRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            String message = robot.getMessage(str);
-            System.out.println(message);
+            RetModel model = robot.getMessage(str);
+            System.out.println(model.getMessage());
         }
 
     }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.ReqTypeEnum;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.TianParam;
 import com.bingeox.wechatbot.entity.bot.TianResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -23,6 +24,7 @@ public class TianRobot implements Robot {
 
     private static final String APP_KEY = "6d82ba25df8a6fd82d320c47b1d197f8";
     private static final String URL = "http://api.tianapi.com/txapi/robot/index";
+    private static final String TU_URL = "http://api.tianapi.com/txapi/tuling/index";
 
     /**
      * 100	内部服务器错误	出现此错误码请及时反馈或等待修复
@@ -43,18 +45,34 @@ public class TianRobot implements Robot {
      * 1开头的是系统级错误，2开头的是用户级错误，其中200代码表示请求成功处理。
      */
     @Override
-    public String getMessage(String text) {
+    public RetModel getMessage(String text) {
         TianParam param = new TianParam(text, APP_KEY, USER_ID, ReqTypeEnum.TEXT.getType());
-        JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
+
+        String turl = TU_URL + "?key=" + APP_KEY + "&question=" + text;
         String answer = "搜噶";
-        if (resp.getIntValue("code") == Constants.TWO_HUNDRED){
-            List<TianResult> newslist = JSON.parseObject(resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
-            });
-            TianResult tianResult = newslist.stream()
-                    .filter(r -> r.getDataType().equals(Constants.TEXT)).findAny().get();
-            answer = (tianResult != null ? tianResult.getReply() : answer);
+        JSONObject tu_resp = HttpClientUtils.httpGet(turl);
+        if (tu_resp.getIntValue("code") != Constants.TWO_HUNDRED){
+            String url = URL + "?key=" + APP_KEY + "&question=" + text;
+            JSONObject resp = HttpClientUtils.httpGet(url);
+            if (resp.getIntValue("code") == Constants.TWO_HUNDRED){
+                List<TianResult> newslist = JSON.parseObject(resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
+                });
+                TianResult tianResult = newslist.get(0);
+                answer = (tianResult != null ? tianResult.getReply() : answer);
+                answer = answer.replaceAll("\\{robotname}","");
+                answer = answer.replaceAll("\\{appellation}","");
+                return RetModel.success(answer);
+            }
+            return RetModel.fail();
         }
-        return answer;
+        List<TianResult> newslist = JSON.parseObject(tu_resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
+        });
+        TianResult tianResult = newslist.get(0);
+        answer = (tianResult != null ? tianResult.getReply() : answer);
+        answer = answer.replaceAll("\\{robotname}","");
+        answer = answer.replaceAll("\\{appellation}","");
+        return RetModel.success(answer);
+
     }
 
     public static void main(String[] args) {
@@ -62,8 +80,8 @@ public class TianRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            String message = robot.getMessage(str);
-            System.out.println(message);
+            RetModel model = robot.getMessage(str);
+            System.out.println(model.getMessage());
         }
     }
 

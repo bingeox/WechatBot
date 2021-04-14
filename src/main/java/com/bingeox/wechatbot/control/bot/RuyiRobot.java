@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bingeox.wechatbot.constant.Constants;
+import com.bingeox.wechatbot.entity.RetModel;
 import com.bingeox.wechatbot.entity.bot.RuyiParam;
 import com.bingeox.wechatbot.entity.bot.RuyiResult;
 import com.bingeox.wechatbot.utils.HttpClientUtils;
@@ -36,7 +37,7 @@ public class RuyiRobot implements Robot {
      * 503	服务不可用	服务异常或正在维护
      */
     @Override
-    public String getMessage(String text) {
+    public RetModel getMessage(String text) {
         RuyiParam param = new RuyiParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
@@ -46,8 +47,9 @@ public class RuyiRobot implements Robot {
             List<RuyiResult.Intent.Output> outputs = ruyiResult.getIntents().get(0).getOutputs();
             RuyiResult.Intent.Output output = outputs.stream().filter(o -> o.getType().equals(Constants.WECHAT_TEXT)).findFirst().get();
             answer = (output.getProperty() != null ? output.getProperty().getText() : answer);
+            return RetModel.success(answer);
         }
-        return answer;
+        return RetModel.fail();
     }
 
     public static void main(String[] args) {
@@ -55,8 +57,8 @@ public class RuyiRobot implements Robot {
         for (int i = 0; i < 3; i++) {
             Scanner input = new Scanner(System.in);
             String str = input.next();
-            String message = robot.getMessage(str);
-            System.out.println(message);
+            RetModel model = robot.getMessage(str);
+            System.out.println(model.getMessage());
         }
     }
 }
