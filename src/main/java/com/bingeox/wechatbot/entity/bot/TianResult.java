@@ -21,7 +21,7 @@ public class TianResult implements Serializable {
     /**
      * 数据类型：text文本；view图文；image图片
      */
-    @JSONField(name="datatype")
+    @JSONField(name = "datatype")
     private String dataType;
 
 }

@@ -17,16 +17,16 @@ public class WeChatBotConfig {
     public WeChatBotClient initWeChatBotClient() throws Exception {
         WeChatBotClient client = new WeChatBotClient(weChatUrl);
         client.setConnectionLostTimeout(0);
+        log.info("client connecting...");
         client.connect();
 
         new Thread(() -> {
-            log.info("client state:{}",client.getReadyState());
-            while (!client.getReadyState().equals(ReadyState.OPEN)){
-                try{
+            log.info("client state:{}", client.getReadyState());
+            while (!client.getReadyState().equals(ReadyState.OPEN)) {
+                try {
                     Thread.sleep(200);
-                    log.info("client connecting...");
                     client.send("connect");
-                }catch (Exception e){
+                } catch (Exception e) {
                     log.info("client reconnecting...");
                     client.reconnect();
                 }

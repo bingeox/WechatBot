@@ -63,16 +63,16 @@ public class AiQQParam implements Serializable {
     /**
      * 获取请求签名，接口鉴权 https://ai.qq.com/doc/auth.shtml
      * 计算步骤:
-     *     1.将 <key, value> 请求参数对按 key 进行字典升序排序，得到有序的参数对列表 N
-     *     2.将列表 N 中的参数对按 URL 键值对的格式拼接成字符串，得到字符串 T（如：key1=value1&key2=value2），
-     *         URL 键值拼接过程 value 部分需要 URL 编码，URL 编码算法用大写字母，例如 %E8，而不是小写 %e8
-     *     3.将应用密钥以 app_key 为键名，组成 URL 键值拼接到字符串 T 末尾，得到字符串 S（如：key1=value1&key2=value2&app_key = 密钥)
-     *     4.对字符串 S 进行 MD5 运算，将得到的 MD5 值所有字符转换成大写，得到接口请求签名
+     * 1.将 <key, value> 请求参数对按 key 进行字典升序排序，得到有序的参数对列表 N
+     * 2.将列表 N 中的参数对按 URL 键值对的格式拼接成字符串，得到字符串 T（如：key1=value1&key2=value2），
+     * URL 键值拼接过程 value 部分需要 URL 编码，URL 编码算法用大写字母，例如 %E8，而不是小写 %e8
+     * 3.将应用密钥以 app_key 为键名，组成 URL 键值拼接到字符串 T 末尾，得到字符串 S（如：key1=value1&key2=value2&app_key = 密钥)
+     * 4.对字符串 S 进行 MD5 运算，将得到的 MD5 值所有字符转换成大写，得到接口请求签名
      * 注意事项:
      * 参数名区分大小写，参数值为空不参与签名
      * URL键值拼接过程value部分需要URL编码
      */
-    public String getReqSign(Map<String, Object> map, String appKey){
+    public String getReqSign(Map<String, Object> map, String appKey) {
         //将 <key, value> 请求参数对按 key 进行字典升序排序
         LinkedHashMap<String, Object> sortedMap = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
@@ -95,12 +95,12 @@ public class AiQQParam implements Serializable {
     public static void main(String[] args) {
         String APP_KEY = "AbdjjKfTouCXKExZ";
         Map<String, Object> map = new HashMap<>();
-        map.put("ssdc","1221");
-        map.put("ddaw","ad1");
-        map.put("ewqf","22");
-        map.put("ass","dad");
-        map.put("fsas","ada");
-        map.put("1sas","ada");
+        map.put("ssdc", "1221");
+        map.put("ddaw", "ad1");
+        map.put("ewqf", "22");
+        map.put("ass", "dad");
+        map.put("fsas", "ada");
+        map.put("1sas", "ada");
         LinkedHashMap<String, Object> sortedMap = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(

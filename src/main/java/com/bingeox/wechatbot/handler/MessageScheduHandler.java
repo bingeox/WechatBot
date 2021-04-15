@@ -41,7 +41,7 @@ public class MessageScheduHandler {
      * 每天早上 7:30 执行一次
      */
     @Scheduled(cron = "0 30 7 * * ?")
-    public void alarmMessage(){
+    public void alarmMessage() {
         //计算时间差值
         long between = DateTime.of(startDate, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
         String delta_msg = "老婆这是我们在一起的第" + between + "天。\n每天为你定时播报\n你亲爱的老公！";

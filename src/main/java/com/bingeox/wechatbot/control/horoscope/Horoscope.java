@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author xiaobing@meicai.cn
  * @description 爬取 星座屋 星座运势
- *     https://www.xzw.com/
+ * https://www.xzw.com/
  * @since 2021/4/7
  **/
 @Slf4j

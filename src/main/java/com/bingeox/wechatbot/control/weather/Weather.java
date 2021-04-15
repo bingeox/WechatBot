@@ -25,12 +25,12 @@ public class Weather {
      * @param cityName
      * @return
      */
-    public String getTodayWeather(String cityName){
+    public String getTodayWeather(String cityName) {
         log.info("获取 {} 的天气...", cityName);
         String returnText = "";
         try {
             JSONObject resp = HttpClientUtils.httpGet(URL + cityName + suffix);
-            if (resp.getIntValue("code") == Constants.ONE){
+            if (resp.getIntValue("code") == Constants.ONE) {
                 WeatherResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<WeatherResult>() {
                 });
                 String reportTime = data.getReportTime().trim().split(" ")[0];
@@ -38,8 +38,8 @@ public class Weather {
                         reportTime, cityName, data.getTemp(), data.getWeather(),
                         data.getHumidity(), data.getWindPower(), data.getWindDirection());
             }
-        }catch (Exception ex){
-            log.error("getTodayWeather error,param:{} ex:{}",cityName, ex.getMessage(), ex);
+        } catch (Exception ex) {
+            log.error("getTodayWeather error,param:{} ex:{}", cityName, ex.getMessage(), ex);
         }
         return returnText;
     }

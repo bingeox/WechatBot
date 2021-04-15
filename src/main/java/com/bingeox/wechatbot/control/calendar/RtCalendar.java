@@ -49,19 +49,19 @@ public class RtCalendar {
         String returnText = "";
         try {
             JSONObject resp = HttpClientUtils.httpGet(URL + date + suffix);
-            if (resp.getIntValue("code") == Constants.ONE){
+            if (resp.getIntValue("code") == Constants.ONE) {
                 RtCalendarResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<RtCalendarResult>() {
                 });
                 String solarTerms = data.getSolarTerms();
-                if (!STFT.contains(solarTerms)){
+                if (!STFT.contains(solarTerms)) {
                     solarTerms = "";
                 }
                 String suit = data.getSuit();
-                if (StringUtils.isEmpty(suit)){
+                if (StringUtils.isEmpty(suit)) {
                     suit = "无";
                 }
                 String avoid = data.getAvoid();
-                if (StringUtils.isEmpty(avoid)){
+                if (StringUtils.isEmpty(avoid)) {
                     avoid = "无";
                 }
 
@@ -70,7 +70,7 @@ public class RtCalendar {
 
             }
         } catch (Exception ex) {
-            log.error("getRtCalendar error,param:{} ex:{}",date, ex.getMessage(), ex);
+            log.error("getRtCalendar error,param:{} ex:{}", date, ex.getMessage(), ex);
         }
         return returnText;
     }

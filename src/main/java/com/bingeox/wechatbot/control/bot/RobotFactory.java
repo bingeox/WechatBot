@@ -31,7 +31,7 @@ public class RobotFactory {
     private static List<Robot> robots;
 
     @PostConstruct
-    public void initRobot(){
+    public void initRobot() {
         robots = Lists.newLinkedList();
         robots.add(ruyiRobot);
         robots.add(ownThinkRobot);
@@ -40,12 +40,12 @@ public class RobotFactory {
 //        robots.add(tuLingRobot);
     }
 
-    public String getMessage(String question){
+    public String getMessage(String question) {
         //默认使用 ruyiRobot
         String answer = "搜噶";
         for (Robot robot : robots) {
             RetModel model = robot.getMessage(question);
-            if (model.isRet() && StrUtil.isNotEmpty(model.getMessage())){
+            if (model.isRet() && StrUtil.isNotEmpty(model.getMessage())) {
                 answer = model.getMessage();
                 break;
             }

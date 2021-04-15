@@ -46,7 +46,7 @@ public class TuLingRobot implements Robot {
      * 0	上传成功
      */
     private static final List<Integer> ERROR_CODE = Lists.newArrayList(
-            0,6000,5000,4000,4001,4002,4003,4005,4007,4100,4200,4300,4400,4500,4600,4602,7002,8008
+            0, 6000, 5000, 4000, 4001, 4002, 4003, 4005, 4007, 4100, 4200, 4300, 4400, 4500, 4600, 4602, 7002, 8008
     );
 
     @Override
@@ -56,7 +56,7 @@ public class TuLingRobot implements Robot {
         TuLingResult result = resp.toJavaObject(new TypeReference<TuLingResult>() {
         });
         String answer = "搜噶";
-        if (!ERROR_CODE.contains(result.getIntent().getCode())){
+        if (!ERROR_CODE.contains(result.getIntent().getCode())) {
             TuLingResult.Results results = result.getResults().stream().filter(r -> r.getResultType().equals(Constants.TEXT)).findAny().get();
             answer = (results.getValues() != null ? results.getValues().getValue() : answer);
             return RetModel.success(answer);

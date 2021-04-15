@@ -20,11 +20,11 @@ public class RetModel {
         this.message = message;
     }
 
-    public static RetModel success(String message){
+    public static RetModel success(String message) {
         return new RetModel(true, message);
     }
 
-    public static RetModel fail(){
+    public static RetModel fail() {
         return new RetModel(false, null);
     }
 }

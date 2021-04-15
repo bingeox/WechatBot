@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public enum ConstellationEnum {
-    
+
     ARIES("白羊座", "aries"),
     TAURUS("金牛座", "taurus"),
     GEMINI("双子座", "gemini"),

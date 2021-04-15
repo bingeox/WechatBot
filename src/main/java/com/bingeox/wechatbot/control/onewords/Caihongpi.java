@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 public class Caihongpi implements Oneword {
     private static final String URL = "https://chp.shadiao.app/api.php";
 
-    public String getCaihongpiInfo(){
+    public String getCaihongpiInfo() {
         String caihongpi = "";
         try {
             caihongpi = HttpClientUtils.httpGet_Str(URL);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("getCaihongpiInfo error, ex:{}", ex.getMessage(), ex);
         }
         return caihongpi;
@@ -35,7 +35,7 @@ public class Caihongpi implements Oneword {
     @Override
     public RetModel getOneword() {
         String info = getCaihongpiInfo();
-        if (StrUtil.isNotBlank(info)){
+        if (StrUtil.isNotBlank(info)) {
             return RetModel.success(info);
         }
         return RetModel.fail();

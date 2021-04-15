@@ -41,7 +41,7 @@ public class RuyiRobot implements Robot {
         RuyiParam param = new RuyiParam(text, APP_KEY, USER_ID);
         JSONObject resp = HttpClientUtils.httpPost(URL, (JSONObject) JSON.toJSON(param));
         String answer = "搜噶";
-        if (resp.getIntValue("code") == Constants.ZERO || resp.getIntValue("code") == Constants.TWO_HUNDRED){
+        if (resp.getIntValue("code") == Constants.ZERO || resp.getIntValue("code") == Constants.TWO_HUNDRED) {
             RuyiResult ruyiResult = JSON.parseObject(resp.get("result").toString(), new TypeReference<RuyiResult>() {
             });
             List<RuyiResult.Intent.Output> outputs = ruyiResult.getIntents().get(0).getOutputs();

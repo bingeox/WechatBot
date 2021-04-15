@@ -19,17 +19,17 @@ public class Hitokoto implements Oneword {
     @Override
     public RetModel getOneword() {
         String info = getHitokotoInfo();
-        if (StrUtil.isNotBlank(info)){
+        if (StrUtil.isNotBlank(info)) {
             return RetModel.success(info);
         }
         return RetModel.fail();
     }
 
-    public String getHitokotoInfo(){
+    public String getHitokotoInfo() {
         String hitokoto = "";
         try {
             hitokoto = HttpClientUtils.httpGet_Str(URL);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("getHitokotoInfo error, ex:{}", ex.getMessage(), ex);
         }
         return hitokoto;

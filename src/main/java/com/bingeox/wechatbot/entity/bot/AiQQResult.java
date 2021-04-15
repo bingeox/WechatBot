@@ -15,12 +15,12 @@ public class AiQQResult implements Serializable {
 
     /**
      * {
-     *   "ret": 0,
-     *   "msg": "ok",
-     *   "data": {
-     *       "session": "10000",
-     *       "answer": "我叫小豪豪~"
-     *   }
+     * "ret": 0,
+     * "msg": "ok",
+     * "data": {
+     * "session": "10000",
+     * "answer": "我叫小豪豪~"
+     * }
      * }
      */
     private String session;

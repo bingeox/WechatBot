@@ -51,16 +51,16 @@ public class TianRobot implements Robot {
         String turl = TU_URL + "?key=" + APP_KEY + "&question=" + text;
         String answer = "搜噶";
         JSONObject tu_resp = HttpClientUtils.httpGet(turl);
-        if (tu_resp.getIntValue("code") != Constants.TWO_HUNDRED){
+        if (tu_resp.getIntValue("code") != Constants.TWO_HUNDRED) {
             String url = URL + "?key=" + APP_KEY + "&question=" + text;
             JSONObject resp = HttpClientUtils.httpGet(url);
-            if (resp.getIntValue("code") == Constants.TWO_HUNDRED){
+            if (resp.getIntValue("code") == Constants.TWO_HUNDRED) {
                 List<TianResult> newslist = JSON.parseObject(resp.get("newslist").toString(), new TypeReference<List<TianResult>>() {
                 });
                 TianResult tianResult = newslist.get(0);
                 answer = (tianResult != null ? tianResult.getReply() : answer);
-                answer = answer.replaceAll("\\{robotname}","");
-                answer = answer.replaceAll("\\{appellation}","");
+                answer = answer.replaceAll("\\{robotname}", "");
+                answer = answer.replaceAll("\\{appellation}", "");
                 return RetModel.success(answer);
             }
             return RetModel.fail();
@@ -69,8 +69,8 @@ public class TianRobot implements Robot {
         });
         TianResult tianResult = newslist.get(0);
         answer = (tianResult != null ? tianResult.getReply() : answer);
-        answer = answer.replaceAll("\\{robotname}","");
-        answer = answer.replaceAll("\\{appellation}","");
+        answer = answer.replaceAll("\\{robotname}", "");
+        answer = answer.replaceAll("\\{appellation}", "");
         return RetModel.success(answer);
 
     }

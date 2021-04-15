@@ -23,8 +23,8 @@ public class Aciba implements Oneword {
     @Override
     public RetModel getOneword() {
         AcibInfo info = getAcibInfo();
-        if (info.getContent() != null){
-            return RetModel.success(info.getContent()+"\n"+info.getNote());
+        if (info.getContent() != null) {
+            return RetModel.success(info.getContent() + "\n" + info.getNote());
         }
         return RetModel.fail();
     }
@@ -35,7 +35,7 @@ public class Aciba implements Oneword {
             JSONObject resp = HttpClientUtils.httpGet(URL);
             data = JSON.parseObject(resp.toString(), new TypeReference<AcibInfo>() {
             });
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("getAcibInfo error, ex:{}", ex.getMessage(), ex);
         }
         return data;

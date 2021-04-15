@@ -19,17 +19,17 @@ public class LoveLive implements Oneword {
     @Override
     public RetModel getOneword() {
         String info = getLoveLiveInfo();
-        if (StrUtil.isNotBlank(info)){
+        if (StrUtil.isNotBlank(info)) {
             return RetModel.success(info);
         }
         return RetModel.fail();
     }
 
-    public String getLoveLiveInfo(){
+    public String getLoveLiveInfo() {
         String lovelive = "";
         try {
             lovelive = HttpClientUtils.httpGet_Str(URL);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("getLoveLiveInfo error, ex:{}", ex.getMessage(), ex);
         }
         return lovelive;

@@ -29,7 +29,7 @@ public class OnewordFactory {
     private static List<Oneword> onewords;
 
     @PostConstruct
-    public void initOne(){
+    public void initOne() {
         onewords = Lists.newLinkedList();
         onewords.add(aciba);
         onewords.add(caihongpi);
@@ -38,11 +38,11 @@ public class OnewordFactory {
         onewords.add(rtjokes);
     }
 
-    public String getOneword(){
+    public String getOneword() {
         String oneword = "";
         for (Oneword one : onewords) {
             RetModel model = one.getOneword();
-            if (model.isRet()){
+            if (model.isRet()) {
                 oneword = model.getMessage();
                 break;
             }

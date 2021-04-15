@@ -37,7 +37,7 @@ public class WeChatBotClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        log.info("Connection closed by {}  Code: {} Reason: ",( remote ? "remote peer" : "us" ), code, reason);
+        log.info("Connection closed by {}  Code: {} Reason: ", (remote ? "remote peer" : "us"), code, reason);
 
     }
 

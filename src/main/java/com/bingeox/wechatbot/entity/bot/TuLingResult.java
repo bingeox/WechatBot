@@ -29,7 +29,7 @@ public class TuLingResult implements Serializable {
     public static class Results implements Serializable {
         private static final long serialVersionUID = -3404115733111557203L;
         /**
-         *‘组’编号:0为独立输出，大于0时可能包含同组相关内容 (如：音频与文本为一组时说明内容一致)
+         * ‘组’编号:0为独立输出，大于0时可能包含同组相关内容 (如：音频与文本为一组时说明内容一致)
          */
         private int groupType;
         /**

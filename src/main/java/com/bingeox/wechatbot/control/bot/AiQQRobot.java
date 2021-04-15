@@ -18,7 +18,7 @@ import java.util.Scanner;
 /**
  * @author bingeox
  * @description 智能闲聊（腾讯）<https://ai.qq.com/product/nlpchat.shtml>
- *     接口文档：<https://ai.qq.com/doc/nlpchat.shtml>
+ * 接口文档：<https://ai.qq.com/doc/nlpchat.shtml>
  * @since 2021/4/1
  **/
 @Component
@@ -46,9 +46,9 @@ public class AiQQRobot implements Robot {
         });
         String str = sb.toString().substring(0, sb.toString().lastIndexOf("&"));
 
-        JSONObject resp = HttpClientUtils.httpGet(URL+ "?" +str);
+        JSONObject resp = HttpClientUtils.httpGet(URL + "?" + str);
         String answer = "搜噶";
-        if (resp.getIntValue("ret") == Constants.ZERO){
+        if (resp.getIntValue("ret") == Constants.ZERO) {
             AiQQResult data = JSON.parseObject(resp.get("data").toString(), new TypeReference<AiQQResult>() {
             });
             answer = (data != null ? data.getAnswer() : answer);

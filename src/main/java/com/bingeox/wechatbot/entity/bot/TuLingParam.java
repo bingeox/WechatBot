@@ -31,18 +31,18 @@ public class TuLingParam implements Serializable {
      */
     private UserInfo userInfo;
 
-    public TuLingParam(String req, String apiKey, String userId, ReqTypeEnum reqType){
+    public TuLingParam(String req, String apiKey, String userId, ReqTypeEnum reqType) {
         this.reqType = reqType.getType();
         this.userInfo = new UserInfo(apiKey, userId);
         Perception perception = new Perception();
         Perception.Resource resource = new Perception.Resource();
-        if (reqType.equals(ReqTypeEnum.TEXT)){
+        if (reqType.equals(ReqTypeEnum.TEXT)) {
             perception.setInputText(resource.setText(req));
         }
-        if (reqType.equals(ReqTypeEnum.IMAGE)){
+        if (reqType.equals(ReqTypeEnum.IMAGE)) {
             perception.setInputImage(resource.setUrl(req));
         }
-        if (reqType.equals(ReqTypeEnum.MEDIA)){
+        if (reqType.equals(ReqTypeEnum.MEDIA)) {
             perception.setInputMedia(resource.setUrl(req));
         }
     }

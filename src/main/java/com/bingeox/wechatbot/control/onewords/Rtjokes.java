@@ -24,21 +24,21 @@ public class Rtjokes implements Oneword {
     @Override
     public RetModel getOneword() {
         String info = getRtjokesInfo();
-        if (StrUtil.isNotBlank(info)){
+        if (StrUtil.isNotBlank(info)) {
             return RetModel.success(info);
         }
         return RetModel.fail();
     }
 
-    public String getRtjokesInfo(){
+    public String getRtjokesInfo() {
         String rtjokes = "";
         try {
             JSONObject resp = HttpClientUtils.httpGet(URL);
-            if (resp.getIntValue("code") == Constants.ONE){
+            if (resp.getIntValue("code") == Constants.ONE) {
                 JSONArray data = resp.getJSONArray("data");
                 rtjokes = JSON.parseObject(data.get(0).toString()).getString("content");
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("getRtjokesInfo error, ex:{}", ex.getMessage(), ex);
         }
         return rtjokes;
