@@ -1,5 +1,6 @@
 package com.bingeox.wechatbot.control.bot;
 
+import cn.hutool.core.util.StrUtil;
 import com.bingeox.wechatbot.entity.RetModel;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class RobotFactory {
         String answer = "搜噶";
         for (Robot robot : robots) {
             RetModel model = robot.getMessage(question);
-            if (model.isRet()){
+            if (model.isRet() && StrUtil.isNotEmpty(model.getMessage())){
                 answer = model.getMessage();
                 break;
             }

@@ -32,18 +32,18 @@ public class WeChatBotClient extends WebSocketClient {
     public void onOpen(ServerHandshake serverHandshake) {
         short httpStatus = serverHandshake.getHttpStatus();
         String httpStatusMessage = serverHandshake.getHttpStatusMessage();
-        log.info("正在打开链接....httpStatu:{} httpStatusMessage:{}", httpStatus, httpStatusMessage);
+        log.info("Connection opened....httpStatu:{} httpStatusMessage:{}", httpStatus, httpStatusMessage);
     }
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        log.info("远程主机{}关闭链接，关闭原因:{}", remote, reason);
+        log.info("Connection closed by {}  Code: {} Reason: ",( remote ? "remote peer" : "us" ), code, reason);
 
     }
 
     @Override
     public void onError(Exception e) {
-        log.info("异常, reason:{} ex:{}", e.getMessage(), e);
+        log.info("Connection error, reason:{} ex:{}", e.getMessage(), e);
     }
 
 }

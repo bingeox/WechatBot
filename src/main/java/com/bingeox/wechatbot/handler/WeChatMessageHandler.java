@@ -43,8 +43,8 @@ public class WeChatMessageHandler {
     private static boolean isPause = false;
 
     public void handMessage(BaseMessage message) {
+        log.info("收到消息：" + message);
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
-            log.info("收到消息：" + message);
             String contont = message.getContent().toString();
 
             if (StrUtil.isNotEmpty(specialWxId) && message.getSender().equals(specialWxId)) {
@@ -74,7 +74,7 @@ public class WeChatMessageHandler {
                 }
                 //是否机器人回复状态
                 if (Constants.STATUS.equals(contont)) {
-                    String status = "isPause:" + isPause + "\n nick:" + specialWxId;
+                    String status = "isPause:" + isPause + "\nnick:" + specialWxId;
                     sendTextMsg(Constants.FILE_HELPER, status);
                     return;
                 }

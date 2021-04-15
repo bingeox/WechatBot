@@ -18,10 +18,21 @@ public class WeChatBotConfig {
         WeChatBotClient client = new WeChatBotClient(weChatUrl);
         client.setConnectionLostTimeout(0);
         client.connect();
-        while (!client.getReadyState().equals(ReadyState.OPEN)) {
-            Thread.sleep(200);
-            log.info("正在链接...");
-        }
+
+        new Thread(() -> {
+            log.info("client state:{}",client.getReadyState());
+            while (!client.getReadyState().equals(ReadyState.OPEN)){
+                try{
+                    Thread.sleep(200);
+                    log.info("client connecting...");
+                    client.send("connect");
+                }catch (Exception e){
+                    log.info("client reconnecting...");
+                    client.reconnect();
+                }
+            }
+        }).start();
+
         return client;
     }
 }
