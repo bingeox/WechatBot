@@ -29,9 +29,12 @@ public class WeChatMessageHandler {
     @Autowired
     private RobotFactory robotFactory;
 
+    private static String specialWxId = StrUtil.EMPTY;
     private static final Map<String, String> nickMap = new HashMap<String, String>() {{
         put("wife", "wxid_6057790578912");
         put("son", "wxid_9wrq5rwi31ye22");
+        put("empty", "");
+        put("file", "filehelper");
     }};
 
     /**
@@ -40,7 +43,6 @@ public class WeChatMessageHandler {
     private static boolean isPause = false;
 
     public void handMessage(BaseMessage message) {
-        String specialWxId = StrUtil.EMPTY;
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
             log.info("收到消息：" + message);
             String contont = message.getContent().toString();
@@ -55,9 +57,11 @@ public class WeChatMessageHandler {
             }
             //filehelper 控制状态
             if (message.getSender().equals(Constants.SELF)) {
+                //contont 转小写
+                contont = contont.toLowerCase();
                 //specialWxId 赋值
                 if (contont.startsWith(Constants.NICK)) {
-                    specialWxId = nickMap.get(contont.replace(Constants.TO, ""));
+                    specialWxId = nickMap.get(contont.replace(Constants.NICK, ""));
                     return;
                 }
                 if (Constants.PAUSE.equals(contont)) {
