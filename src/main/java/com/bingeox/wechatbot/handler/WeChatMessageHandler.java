@@ -1,5 +1,6 @@
 package com.bingeox.wechatbot.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.bingeox.wechatbot.config.WeChatBotClient;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.TypeEnum;
@@ -7,10 +8,14 @@ import com.bingeox.wechatbot.control.bot.RobotFactory;
 import com.bingeox.wechatbot.entity.message.BaseMessage;
 import com.bingeox.wechatbot.entity.message.NormalMessage;
 import com.bingeox.wechatbot.entity.message.RoomMessage;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * doc: https://www.showdoc.com.cn/wechatbot?page_id=3905634824500582
@@ -24,44 +29,58 @@ public class WeChatMessageHandler {
     @Autowired
     private RobotFactory robotFactory;
 
-    @Value("${special.wxid}")
-    private String specialWxId;
-
-    private String tempWxId = "wxid_6057790578912";
+    private static final Map<String, String> nickMap = new HashMap<String, String>() {{
+        put("wife", "wxid_6057790578912");
+        put("son", "wxid_9wrq5rwi31ye22");
+    }};
 
     /**
      * 控制是否需要机器人回复
      */
-    private static boolean isPause = true;
+    private static boolean isPause = false;
 
     public void handMessage(BaseMessage message) {
+        String specialWxId = StrUtil.EMPTY;
         if (message.getType() == TypeEnum.RECV_TXT_MSG.getType()) {
             log.info("收到消息：" + message);
-            if (message.getSender().equals(specialWxId) && isPause) {
-                sendTextMsg(specialWxId, robotFactory.getMessage(message.getContent().toString()));
-            }
+            String contont = message.getContent().toString();
 
-            if (message.getSender().equals(tempWxId)) {
-                sendTextMsg(Constants.FILE_HELPER, "老婆的消息：" + message.getContent());
+            if (StrUtil.isNotEmpty(specialWxId) && message.getSender().equals(specialWxId)) {
+                if (isPause) {
+                    sendTextMsg(specialWxId, robotFactory.getMessage(contont));
+                }
+                //转发消息到 filehelper
+                sendTextMsg(Constants.FILE_HELPER, "老婆的消息：" + contont);
+                return;
             }
-
+            //filehelper 控制状态
             if (message.getSender().equals(Constants.SELF)) {
-                String contont = message.getContent().toString();
-                //转发消息
-                if (Constants.TO.startsWith(contont)){
-                    sendTextMsg(tempWxId, contont.replace(Constants.TO, ""));
+                //specialWxId 赋值
+                if (contont.startsWith(Constants.NICK)) {
+                    specialWxId = nickMap.get(contont.replace(Constants.TO, ""));
+                    return;
                 }
-                if (Constants.STATUS.equals(contont)){
-                    String status = "isPause:" + isPause;
-                    sendTextMsg(Constants.FILE_HELPER, status);
-                }
-                if (Constants.PAUSE.equals(contont)){
+                if (Constants.PAUSE.equals(contont)) {
                     isPause = false;
+                    return;
                 }
-                if (Constants.GO_ON.equals(contont)){
+                if (Constants.GO_ON.equals(contont)) {
                     isPause = true;
+                    return;
+                }
+                //是否机器人回复状态
+                if (Constants.STATUS.equals(contont)) {
+                    String status = "isPause:" + isPause + "\n nick:" + specialWxId;
+                    sendTextMsg(Constants.FILE_HELPER, status);
+                    return;
+                }
+                //filehelper 转发消息到 special
+                if (contont.startsWith(Constants.TO)) {
+                    sendTextMsg(specialWxId, contont.replace(Constants.TO, ""));
+                    return;
                 }
             }
+
         }
     }
 
@@ -213,7 +232,7 @@ public class WeChatMessageHandler {
         try {
             client.send(json);
         } catch (Exception e) {
-            log.info("send msg failed, send json:{} ex:{}",json, e);
+            log.info("send msg failed, send json:{} ex:{}", json, e);
         }
     }
 
