@@ -2,6 +2,7 @@ package com.bingeox.wechatbot.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.bingeox.wechatbot.config.WeChatBotClient;
+import com.bingeox.wechatbot.config.WeChatBotConfig;
 import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.constant.TypeEnum;
 import com.bingeox.wechatbot.control.bot.RobotFactory;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +31,19 @@ public class WeChatMessageHandler {
     @Autowired
     private RobotFactory robotFactory;
 
-    private static String specialWxId = StrUtil.EMPTY;
-    private static final Map<String, String> nickMap = new HashMap<String, String>() {{
-        put("wife", "wxid_6057790578912");
-        put("son", "wxid_9wrq5rwi31ye22");
-        put("empty", "");
-        put("file", "filehelper");
-    }};
+    private static String specialWxId;
+    private static Map<String, String> nickMap;
+
+    @PostConstruct
+    private void init() {
+        specialWxId = StrUtil.isEmpty(WeChatBotConfig.getSpecialWxId()) ? StrUtil.EMPTY : WeChatBotConfig.getSpecialWxId();
+        nickMap = new HashMap<String, String>(){{
+            put("wife", "wxid_6057790578912");
+            put("son", "wxid_9wrq5rwi31ye22");
+            put("empty", "");
+            put("file", "filehelper");
+        }};
+    }
 
     /**
      * 控制是否需要机器人回复
@@ -62,6 +70,7 @@ public class WeChatMessageHandler {
                 //specialWxId 赋值
                 if (contont.startsWith(Constants.NICK)) {
                     specialWxId = nickMap.get(contont.replace(Constants.NICK, ""));
+                    WeChatBotConfig.setSpecialWxId(specialWxId);
                     return;
                 }
                 if (Constants.PAUSE.equals(contont)) {

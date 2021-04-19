@@ -13,6 +13,8 @@ public class WeChatBotConfig {
     @Value("${config.weChat.url}")
     private String weChatUrl;
 
+    private static ThreadLocal<String> wxIdLocal = new ThreadLocal<>();
+
     @Bean
     public WeChatBotClient initWeChatBotClient() throws Exception {
         WeChatBotClient client = new WeChatBotClient(weChatUrl);
@@ -35,4 +37,13 @@ public class WeChatBotConfig {
 
         return client;
     }
+
+    public static String getSpecialWxId() {
+        return wxIdLocal.get();
+    }
+
+    public static void setSpecialWxId(String specialWxId) {
+        wxIdLocal.set(specialWxId);
+    }
+
 }

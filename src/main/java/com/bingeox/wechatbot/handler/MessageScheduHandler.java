@@ -2,6 +2,8 @@ package com.bingeox.wechatbot.handler;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.util.StrUtil;
+import com.bingeox.wechatbot.config.WeChatBotConfig;
 import com.bingeox.wechatbot.control.bot.RobotFactory;
 import com.bingeox.wechatbot.control.calendar.RtCalendar;
 import com.bingeox.wechatbot.control.onewords.OnewordFactory;
@@ -34,9 +36,6 @@ public class MessageScheduHandler {
 
     private static final String startDate = "20150723";
 
-    @Value("${special.wxid}")
-    private String specialWxId;
-
     /**
      * 每天早上 7:30 执行一次
      */
@@ -57,7 +56,10 @@ public class MessageScheduHandler {
                 .concat(oneword).concat("\n")
                 .concat(delta_msg);
 
-        handler.sendTextMsg(specialWxId, text);
+        String specialWxId = WeChatBotConfig.getSpecialWxId();
+        if (StrUtil.isNotEmpty(specialWxId)) {
+            handler.sendTextMsg("wxid_6057790578912", text);
+        }
 
     }
 
