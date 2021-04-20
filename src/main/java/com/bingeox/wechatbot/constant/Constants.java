@@ -29,4 +29,6 @@ public class Constants {
     public static final String TO = "to:";
     public static final String NICK = "nick:";
 
+    public static final String START_DATE = "20150723";
+
 }

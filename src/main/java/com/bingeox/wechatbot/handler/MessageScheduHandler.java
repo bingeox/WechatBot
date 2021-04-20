@@ -4,8 +4,10 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.util.StrUtil;
 import com.bingeox.wechatbot.config.WeChatBotConfig;
+import com.bingeox.wechatbot.constant.Constants;
 import com.bingeox.wechatbot.control.bot.RobotFactory;
 import com.bingeox.wechatbot.control.calendar.RtCalendar;
+import com.bingeox.wechatbot.control.onewords.Caihongpi;
 import com.bingeox.wechatbot.control.onewords.OnewordFactory;
 import com.bingeox.wechatbot.control.weather.Weather;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +33,6 @@ public class MessageScheduHandler {
     private Weather weather;
     @Autowired
     private OnewordFactory oneword;
-    @Autowired
-    private RobotFactory robot;
-
-    private static final String startDate = "20150723";
 
     /**
      * 每天早上 7:30 执行一次
@@ -42,7 +40,7 @@ public class MessageScheduHandler {
     @Scheduled(cron = "0 30 7 * * ?")
     public void alarmMessage() {
         //计算时间差值
-        long between = DateTime.of(startDate, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
+        long between = DateTime.of(Constants.START_DATE, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
         String delta_msg = "老婆这是我们在一起的第" + between + "天。\n每天为你定时播报\n你亲爱的老公！";
         //获取万年历
         String rtCalendar = this.rtCalendar.getRtCalendar(DateTime.now().toString("yyyyMMdd"));
@@ -58,13 +56,13 @@ public class MessageScheduHandler {
 
         String specialWxId = WeChatBotConfig.getSpecialWxId();
         if (StrUtil.isNotEmpty(specialWxId)) {
-            handler.sendTextMsg("wxid_6057790578912", text);
+            handler.sendTextMsg(specialWxId, text);
         }
 
     }
 
     public static void main(String[] args) {
-        long between = DateTime.of(startDate, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
+        long between = DateTime.of(Constants.START_DATE, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
         System.out.println(between);
     }
 
