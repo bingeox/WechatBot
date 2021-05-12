@@ -37,7 +37,7 @@ public class MessageScheduHandler {
     /**
      * 每天早上 7:30 执行一次
      */
-    @Scheduled(cron = "0 30 7 * * ?")
+    @Scheduled(cron = "0 00 8 * * ?")
     public void alarmMessage() {
         //计算时间差值
         long between = DateTime.of(Constants.START_DATE, "yyyyMMdd").between(DateTime.now(), DateUnit.DAY);
@@ -54,9 +54,9 @@ public class MessageScheduHandler {
                 .concat(oneword).concat("\n")
                 .concat(delta_msg);
 
+        handler.sendTextMsg("wxid_6057790578912", text);
         String specialWxId = WeChatBotConfig.getSpecialWxId();
         if (StrUtil.isNotEmpty(specialWxId)) {
-            handler.sendTextMsg(specialWxId, text);
         }
 
     }
